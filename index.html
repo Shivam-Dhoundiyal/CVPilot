@@ -40,6 +40,50 @@
                         Resources
                         <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
                     </a>
+                    <div class="dropdown-menu" id="resources-dropdown-menu">
+                        <div class="dropdown-column">
+                            <h5 class="dropdown-title">Guides & Strategy</h5>
+                            <a href="#features" class="dropdown-item">
+                                <div class="dropdown-item-icon guide-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                                </div>
+                                <div class="dropdown-item-meta">
+                                    <span class="dropdown-item-title">Resume Blueprint</span>
+                                    <p class="dropdown-item-desc">A recruiter's manual to CV structuring & impact verbs.</p>
+                                </div>
+                            </a>
+                            <a href="#faq" class="dropdown-item">
+                                <div class="dropdown-item-icon tips-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                                </div>
+                                <div class="dropdown-item-meta">
+                                    <span class="dropdown-item-title">Interview Playbook</span>
+                                    <p class="dropdown-item-desc">Cracking the loop: common traps & response frameworks.</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="dropdown-column">
+                            <h5 class="dropdown-title">Interactive Tools</h5>
+                            <a href="#templates" class="dropdown-item">
+                                <div class="dropdown-item-icon builder-icon">
+                                    <span class="sparkle-spark">✦</span>
+                                </div>
+                                <div class="dropdown-item-meta">
+                                    <span class="dropdown-item-title">AI Optimizations</span>
+                                    <p class="dropdown-item-desc">Live feedback on alignment metrics & keyword injection.</p>
+                                </div>
+                            </a>
+                            <a href="#pricing" class="dropdown-item">
+                                <div class="dropdown-item-icon check-icon-box">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                                </div>
+                                <div class="dropdown-item-meta">
+                                    <span class="dropdown-item-title">ATS Format Scanner</span>
+                                    <p class="dropdown-item-desc">Verify file layouts against system parser parameters.</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </nav>
 
@@ -393,6 +437,95 @@
                 </div>
                 <div class="logo-cloud-item">
                     <span class="brand-logo-text">Deloitte.</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =============================================================
+         AI RESHAPER: DRAG & DROP UPLOAD ZONE (Core USP Section)
+         ============================================================= -->
+    <section class="reshaper-section" id="ai-reshaper">
+        <div class="container">
+            <div class="section-header text-center">
+                <span class="section-badge-pill">✨ Core SaaS USP</span>
+                <h2 class="section-title">Upgrade Your Boring Resume Instantly</h2>
+                <p class="section-subtitle font-jakarta">Have an existing, plain resume? Upload it now. Our AI engine parses its layout, injects targeted keywords, and compiles it into an elite, recruiter-ready profile.</p>
+            </div>
+            
+            <div class="reshaper-main-grid">
+                <!-- Left: Drag & Drop Zone Card -->
+                <div class="reshaper-card upload-card glassmorphic">
+                    <div class="reshaper-upload-zone" id="drag-drop-zone">
+                        <input type="file" id="file-uploader-input" accept=".pdf,.docx,.doc,.txt" class="hidden-file-input">
+                        <div class="upload-icon-circle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                        </div>
+                        <h4 class="upload-headline">Drag & drop your existing resume here</h4>
+                        <p class="upload-subtext">Supports PDF, DOCX, DOC, or TXT up to 10MB</p>
+                        <button class="btn btn-secondary btn-sm" id="btn-browse-files">Browse Files</button>
+                    </div>
+
+                    <!-- File Details Container (Visible after upload) -->
+                    <div class="upload-details-box" id="upload-details-panel">
+                        <div class="details-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                        </div>
+                        <div class="details-text">
+                            <h5 id="uploaded-filename">my_boring_resume.pdf</h5>
+                            <p id="uploaded-filesize">145 KB • Ready to Reshape</p>
+                        </div>
+                        <button class="details-remove-btn" id="btn-remove-uploaded" aria-label="Remove uploaded file">×</button>
+                    </div>
+
+                    <!-- Action trigger -->
+                    <div class="reshaper-action-container">
+                        <button class="btn btn-primary btn-lg w-full disabled" id="btn-trigger-reshape">
+                            ✨ AI Rewrite & Reshape Resume
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right: High-Fidelity Diagnostics & Benefits Card -->
+                <div class="reshaper-card info-card">
+                    <h3 class="info-card-title">CVPilot AI Reshape Pipeline</h3>
+                    <p class="info-card-desc">Unlike generic template fill-ins, our multi-agent parser dissects your original work history, structures accomplishments under industry metrics, and aligns tags dynamically.</p>
+                    
+                    <div class="insights-progress-comparison">
+                        <div class="ats-compare-widget original-gauge">
+                            <span class="gauge-score">32%</span>
+                            <span class="gauge-label">Boring Original Resume</span>
+                        </div>
+                        <div class="compare-transfer-arrow">
+                            <span>✦ AI Transformation ✦</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                        </div>
+                        <div class="ats-compare-widget optimized-gauge">
+                            <span class="gauge-score">98%</span>
+                            <span class="gauge-label">Regenerated ATS CV</span>
+                        </div>
+                    </div>
+
+                    <ul class="pipeline-benefits-list">
+                        <li>
+                            <span class="benefit-bullet">✓</span>
+                            <div class="benefit-info">
+                                <strong>ATS Keyword Extraction:</strong> Scan top recruiter systems to automatically match target capabilities.
+                            </div>
+                        </li>
+                        <li>
+                            <span class="benefit-bullet">✓</span>
+                            <div class="benefit-info">
+                                <strong>Metrics Enrichment:</strong> AI-powered algorithms translate plain sentences into impact bullet points.
+                            </div>
+                        </li>
+                        <li>
+                            <span class="benefit-bullet">✓</span>
+                            <div class="benefit-info">
+                                <strong>Multi-Layout Swapper:</strong> Export the result across 8 recruiter-approved layouts instantly.
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -1131,6 +1264,127 @@
                             <span>Provisioning premium widgets...</span>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- =============================================================
+         AI RESHAPER STUDIO OVERLAY MODAL
+         ============================================================= -->
+    <div class="studio-modal-overlay" id="reshaper-modal">
+        <div class="studio-modal-container reshaper-container">
+            <!-- Header/Topbar -->
+            <div class="studio-modal-header">
+                <div class="studio-modal-brand">
+                    <span class="studio-badge" style="background: linear-gradient(135deg, var(--purple-sparkle) 0%, #7c3aed 100%);">AI RESHAPER</span>
+                    <h3>CVPilot AI Resume Workspace</h3>
+                </div>
+                <div class="reshaper-step-badge" id="reshaper-step-badge">Phase: Upload Completed</div>
+                <button class="studio-close-btn" id="close-reshaper-modal" aria-label="Close Reshaper Workspace">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            
+            <!-- Workspace Body -->
+            <div class="studio-modal-body" style="position: relative;">
+                <!-- Left Side: Boring Raw CV -->
+                <div class="reshaper-panel boring-panel">
+                    <div class="panel-header">
+                        <h4>📄 Original Resume (Boring Draft)</h4>
+                        <span class="score-pill score-red" id="original-ats-score">ATS Score: 32%</span>
+                    </div>
+                    <div class="panel-scroll-content">
+                        <pre class="parsed-raw-cv-container" id="parsed-raw-cv-editor" contenteditable="true" style="font-family: 'Courier New', Courier, monospace; font-size: 11.5px; white-space: pre-wrap; line-height: 1.5; color: var(--slate-700); padding: 20px; margin: 0; outline: none; background: var(--white); height: 100%; min-height: 480px;"></pre>
+                    </div>
+                </div>
+
+                <!-- Middle Panel: Processing Animation overlay (active during generation) -->
+                <div class="reshaper-processing-overlay" id="reshaper-processing-loader" style="display: none;">
+                    <div class="loader-content">
+                        <div class="sparkle-loader-circle">
+                            <span class="rotating-sparkle">✦</span>
+                        </div>
+                        <h3>AI Engine Transforming Resume...</h3>
+                        <p>Our multi-agent system is refactoring and optimizing your career profile.</p>
+                        
+                        <div class="loader-progress-bar">
+                            <div class="loader-progress-fill" id="reshaper-progress-bar-fill"></div>
+                        </div>
+
+                        <div class="loader-typewriter-steps" id="reshaper-loader-steps">
+                            <span class="active-step">Initializing parser metrics...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Side: Stunning AI-Generated ATS CV Canvas -->
+                <div class="reshaper-panel premium-panel">
+                    <div class="panel-header">
+                        <h4>✨ AI Regenerated Resume (ATS-Friendly)</h4>
+                        <span class="score-pill score-green" id="regenerated-ats-score">ATS Score: 98%</span>
+                    </div>
+                    
+                    <div class="reshaper-canvas-wrapper">
+                        <!-- Toolbar for dynamic customizations inside Reshaper modal -->
+                        <div class="reshaper-canvas-toolbar">
+                            <div class="toolbar-item">
+                                <label>Target Template:</label>
+                                <select class="reshaper-select" id="reshaper-template-selector">
+                                    <option value="1">Cobalt Slate (Default)</option>
+                                    <option value="2">Creative Tech Sidebar</option>
+                                    <option value="3">Minimalist Executive</option>
+                                    <option value="4">Vibrant Brand Line</option>
+                                    <option value="5">Emerald Sleek</option>
+                                    <option value="6">Amethyst Split</option>
+                                    <option value="7">Elite Single Column</option>
+                                    <option value="8">Minimal Accent Column</option>
+                                </select>
+                            </div>
+                            <div class="toolbar-item" style="display: none;">
+                                <label>Color Theme:</label>
+                                <select class="reshaper-select" id="reshaper-theme-selector">
+                                    <!-- Populated dynamically via JS -->
+                                </select>
+                            </div>
+                            <div class="toolbar-item">
+                                <button class="btn btn-secondary btn-sm" id="btn-reshaper-edit" style="padding: 6px 12px; font-size: 11px; display: inline-flex; align-items: center; gap: 4px;">
+                                    🔧 Toggle Edit mode
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Live blueprint workspace canvas -->
+                        <div class="blueprint-canvas-scroll">
+                            <div class="modal-blueprint-bg">
+                                <div class="cv-card template-1" id="reshaper-cv-canvas">
+                                    <!-- Populated with beautiful rewritten content -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Action Controls -->
+            <div class="reshaper-footer">
+                <div class="footer-stats-meta">
+                    <div class="comparison-stat">
+                        <span class="stat-lbl">Original ATS Match</span>
+                        <span class="stat-val val-red">32% (Critical Gaps)</span>
+                    </div>
+                    <div class="stat-arrow">➔</div>
+                    <div class="comparison-stat">
+                        <span class="stat-lbl">AI Rewritten ATS Match</span>
+                        <span class="stat-val val-green" id="footer-optimized-ats-val">98% (Excellent Match!)</span>
+                    </div>
+                </div>
+                <div class="footer-actions">
+                    <button class="btn btn-secondary" id="btn-reshaper-back">Cancel</button>
+                    <button class="btn btn-primary" id="btn-reshaper-download">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;stroke-width:2.5;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        Export & Download PDF
+                    </button>
                 </div>
             </div>
         </div>

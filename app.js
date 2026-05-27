@@ -586,6 +586,28 @@ document.addEventListener('DOMContentLoaded', () => {
         if (nextGridItem) nextGridItem.click();
     });
 
+    // Resources Dropdown Mobile/Click Support
+    const resourcesToggle = document.getElementById('nav-resources');
+    const resourcesDropdown = document.getElementById('resources-dropdown-menu');
+    if (resourcesToggle && resourcesDropdown) {
+        resourcesToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const isActive = resourcesToggle.parentElement.classList.contains('active');
+            
+            // Close other active modules
+            resourcesToggle.parentElement.classList.toggle('active');
+            showToast(isActive ? "📂 Resources dropdown hidden." : "📂 Resources dropdown toggled.");
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (resourcesToggle && !resourcesToggle.contains(e.target) && !resourcesDropdown.contains(e.target)) {
+                resourcesToggle.parentElement.classList.remove('active');
+            }
+        });
+    }
+
     // Mobile Menu Toggle simulation
     const mobileBtn = document.getElementById('mobile-menu-btn');
     mobileBtn.addEventListener('click', () => {
@@ -1474,6 +1496,425 @@ document.addEventListener('DOMContentLoaded', () => {
             
         }, 1000);
     });
+
+    // =============================================================
+    // AI RESHAPER PIPELINE INTERACTION (Core SaaS USP)
+    // =============================================================
+    
+    const dragDropZone = document.getElementById('drag-drop-zone');
+    const fileUploaderInput = document.getElementById('file-uploader-input');
+    const btnBrowseFiles = document.getElementById('btn-browse-files');
+    const uploadDetailsPanel = document.getElementById('upload-details-panel');
+    const uploadedFilename = document.getElementById('uploaded-filename');
+    const uploadedFilesize = document.getElementById('uploaded-filesize');
+    const btnRemoveUploaded = document.getElementById('btn-remove-uploaded');
+    const btnTriggerReshape = document.getElementById('btn-trigger-reshape');
+    
+    const reshaperModal = document.getElementById('reshaper-modal');
+    const closeReshaperModal = document.getElementById('close-reshaper-modal');
+    const parsedRawCvEditor = document.getElementById('parsed-raw-cv-editor');
+    const reshaperProcessingLoader = document.getElementById('reshaper-processing-loader');
+    const reshaperProgressBarFill = document.getElementById('reshaper-progress-bar-fill');
+    const reshaperLoaderSteps = document.getElementById('reshaper-loader-steps');
+    const reshaperStepBadge = document.getElementById('reshaper-step-badge');
+    const reshaperCvCanvas = document.getElementById('reshaper-cv-canvas');
+    const reshaperTemplateSelector = document.getElementById('reshaper-template-selector');
+    const btnReshaperEdit = document.getElementById('btn-reshaper-edit');
+    const btnReshaperBack = document.getElementById('btn-reshaper-back');
+    const btnReshaperDownload = document.getElementById('btn-reshaper-download');
+
+    const boringResumeContent = `JAMES ANDERSON
+james.a@email.com | +1 555 123-4567 | New York, NY
+
+OBJECTIVE
+Looking for a challenging position in a growing company where I can use my skills.
+
+EXPERIENCE
+Marketing Manager - Growth Corp (2018 - 2021)
+* Helped with marketing stuff.
+* Made some social media posts on Facebook and Instagram.
+* Talked to customers and worked with team members.
+* Managed a small budget.
+
+Marketing Assistant - Tech Solutions (2021 - Present)
+* Worked on search engine optimization and online keywords.
+* Did email campaigns and analytics dashboards.
+* Answered emails and did data entry.
+
+EDUCATION
+Bachelor of Business Administration - New York University (2014 - 2018)
+
+SKILLS
+Microsoft Office, Communication, Teamwork, Social Media, Google Docs`;
+
+    let boringResumeContentParsed = boringResumeContent;
+
+    // Client-side NLP / Heuristics Optimization Engine
+    function optimizeTextClientSide(text) {
+        let name = "JAMES ANDERSON";
+        let title = "MARKETING MANAGER";
+        let email = "james.a@email.com";
+        let phone = "+1 555 123-4567";
+        let location = "New York, NY";
+        let summary = aiOptimizedContent.summary;
+        let skills = [...aiOptimizedContent.skills];
+
+        const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+        if (lines.length > 0) {
+            if (lines[0].length < 35 && !lines[0].includes('@') && !lines[0].includes('|')) {
+                name = lines[0].toUpperCase();
+            }
+        }
+
+        lines.forEach(line => {
+            if (line.includes('@')) {
+                const emailMatch = line.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
+                if (emailMatch) email = emailMatch[0];
+                
+                const phoneMatch = line.match(/\+?\d[\d-\s()]{7,15}/);
+                if (phoneMatch) phone = phoneMatch[0];
+                
+                const locationMatch = line.split('|').pop();
+                if (locationMatch && locationMatch !== line) location = locationMatch.trim();
+            }
+        });
+
+        const hasMarketing = text.toLowerCase().includes('marketing') || text.toLowerCase().includes('helped');
+        const hasSocial = text.toLowerCase().includes('social') || text.toLowerCase().includes('facebook') || text.toLowerCase().includes('instagram');
+        const hasBudget = text.toLowerCase().includes('budget') || text.toLowerCase().includes('money');
+        const hasSeo = text.toLowerCase().includes('seo') || text.toLowerCase().includes('search') || text.toLowerCase().includes('keyword');
+        const hasEmail = text.toLowerCase().includes('email') || text.toLowerCase().includes('campaign');
+
+        let summaryP = `✦ AI RE-ENGINEERED: Highly accomplished professional with a proven track record of driving operational efficiency and strategic growth. Expert in translating complex objectives into streamlined execution pipelines, managing cross-functional initiatives, and delivering measurable ROI.`;
+
+        if (hasMarketing) {
+            summaryP = `✦ AI RE-ENGINEERED: Metrics-driven Marketing Professional with 5+ years of success leading high-impact acquisition campaigns, managing $500K+ program budgets, and supervising agile cross-functional teams. Proven ability to translate brand objectives into optimized execution funnels that scale traffic by 45% and drive lead conversion by 35%.`;
+        }
+
+        // Custom skills mapping
+        let parsedSkills = [];
+        if (hasSeo) parsedSkills.push("SEO Strategy");
+        if (hasSocial) parsedSkills.push("Social Media ROI");
+        if (hasBudget) parsedSkills.push("Budget Management");
+        if (hasEmail) parsedSkills.push("Email Automation");
+        
+        if (parsedSkills.length > 0) {
+            skills = [...parsedSkills, ...skills.slice(parsedSkills.length)];
+        }
+
+        return {
+            name: name,
+            title: title,
+            email: email,
+            phone: phone,
+            location: location,
+            summary: summaryP,
+            skills: skills
+        };
+    }
+
+    // Prevent default drag behaviors
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        if (dragDropZone) {
+            dragDropZone.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+            }, false);
+        }
+    });
+
+    // Add highlight on hover
+    ['dragenter', 'dragover'].forEach(eventName => {
+        if (dragDropZone) {
+            dragDropZone.addEventListener(eventName, () => {
+                dragDropZone.classList.add('dragover');
+            }, false);
+        }
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+        if (dragDropZone) {
+            dragDropZone.addEventListener(eventName, () => {
+                dragDropZone.classList.remove('dragover');
+            }, false);
+        }
+    });
+
+    // Handle dropped files
+    if (dragDropZone) {
+        dragDropZone.addEventListener('drop', (e) => {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            if (files.length > 0) {
+                handleUploadedFile(files[0]);
+            }
+        });
+    }
+
+    // Browse files button click
+    if (btnBrowseFiles && fileUploaderInput) {
+        btnBrowseFiles.addEventListener('click', (e) => {
+            e.preventDefault();
+            fileUploaderInput.click();
+        });
+    }
+
+    // File input changes
+    if (fileUploaderInput) {
+        fileUploaderInput.addEventListener('change', () => {
+            if (fileUploaderInput.files.length > 0) {
+                handleUploadedFile(fileUploaderInput.files[0]);
+            }
+        });
+    }
+
+    // Handle Uploaded File Details & States
+    function handleUploadedFile(file) {
+        const validExtensions = ['pdf', 'docx', 'doc', 'txt'];
+        const fileExt = file.name.split('.').pop().toLowerCase();
+        
+        if (!validExtensions.includes(fileExt)) {
+            showToast("⚠️ Invalid format! Please upload a PDF, DOCX, DOC, or TXT resume.");
+            return;
+        }
+
+        const fileSizeKb = Math.round(file.size / 1024);
+        if (fileSizeKb > 10240) {
+            showToast("⚠️ File is too large! Maximum limit is 10MB.");
+            return;
+        }
+
+        // If it's a plain text file, let's parse and read the content live!
+        if (fileExt === 'txt') {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                boringResumeContentParsed = e.target.result;
+            };
+            reader.readAsText(file);
+        } else {
+            boringResumeContentParsed = boringResumeContent;
+        }
+
+        // Display File details
+        if (uploadedFilename && uploadedFilesize && uploadDetailsPanel && dragDropZone && btnTriggerReshape) {
+            uploadedFilename.textContent = file.name;
+            uploadedFilesize.textContent = `${fileSizeKb} KB • Ready for Reshape`;
+            uploadDetailsPanel.classList.add('active');
+            dragDropZone.style.display = 'none';
+            btnTriggerReshape.classList.remove('disabled');
+            showToast(`📄 Document "${file.name}" ready to analyze.`);
+        }
+    }
+
+    // Remove Uploaded File action
+    if (btnRemoveUploaded) {
+        btnRemoveUploaded.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            resetFileUploader();
+            showToast("🗑️ Uploaded document cleared.");
+        });
+    }
+
+    function resetFileUploader() {
+        if (fileUploaderInput && uploadDetailsPanel && dragDropZone && btnTriggerReshape) {
+            fileUploaderInput.value = '';
+            uploadDetailsPanel.classList.remove('active');
+            dragDropZone.style.display = 'block';
+            btnTriggerReshape.classList.add('disabled');
+        }
+    }
+
+    // Launch AI Reshaper Workspace Modal
+    if (btnTriggerReshape) {
+        btnTriggerReshape.addEventListener('click', () => {
+            if (btnTriggerReshape.classList.contains('disabled')) return;
+            
+            // Activate Modal
+            if (reshaperModal && parsedRawCvEditor) {
+                reshaperModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                
+                // Show parsed content in left panel
+                parsedRawCvEditor.textContent = boringResumeContentParsed;
+                
+                // Trigger compilation sequences
+                startReshaperEngine();
+            }
+        });
+    }
+
+    // Processing Typewriter Simulation Engine
+    function startReshaperEngine() {
+        if (!reshaperProcessingLoader || !reshaperProgressBarFill || !reshaperLoaderSteps || !reshaperStepBadge) return;
+
+        reshaperProcessingLoader.style.display = 'flex';
+        reshaperProgressBarFill.style.width = '0%';
+        reshaperStepBadge.textContent = "Phase: Optimizing Keywords...";
+        
+        const diagnosticSteps = [
+            { time: 0, text: "🔍 Dissecting raw plaintext sections & headers...", progress: 12 },
+            { time: 1300, text: "📊 Scanning layout parameters against recruiter filters...", progress: 35 },
+            { time: 2600, text: "✍️ Generating metrics-driven professional summary summary...", progress: 58 },
+            { time: 3900, text: "🎯 Aligning industry keywords and action metrics tags...", progress: 78 },
+            { time: 5200, text: "✨ Formatting nodes and applying glassmorphic aesthetics...", progress: 92 },
+            { time: 6500, text: "🎉 Compilation finished! Rendering premium matching preview...", progress: 100 }
+        ];
+
+        diagnosticSteps.forEach(step => {
+            setTimeout(() => {
+                reshaperLoaderSteps.textContent = step.text;
+                reshaperProgressBarFill.style.width = `${step.progress}%`;
+                
+                if (step.progress === 100) {
+                    setTimeout(() => {
+                        reshaperProcessingLoader.style.display = 'none';
+                        reshaperStepBadge.textContent = "Phase: AI Rewrite Ready";
+                        showToast("🤖 AI Reshape Engine compiled a recruiter-grade portfolio!");
+                        
+                        // Populate and render beautiful canvas
+                        syncAndRenderReshaperCV(reshaperTemplateSelector.value || "1");
+                    }, 600);
+                }
+            }, step.time);
+        });
+    }
+
+    // Core Canvas Synchronization & Render Cloner
+    function syncAndRenderReshaperCV(templateId) {
+        if (!reshaperCvCanvas || !parsedRawCvEditor) return;
+
+        // Auto-select template on main layout workspace in background to sync elements
+        const backgroundTplBtn = document.querySelector(`.template-grid-item[data-template="${templateId}"]`);
+        if (backgroundTplBtn) {
+            backgroundTplBtn.click();
+        }
+
+        // Small delay to allow main builder reordering routine to render styles
+        setTimeout(() => {
+            const originalMainCard = document.getElementById('main-cv-card');
+            if (originalMainCard) {
+                // Clear Reshaper target canvas
+                reshaperCvCanvas.innerHTML = '';
+                
+                // Clone Main Card layout
+                const clonedNode = originalMainCard.cloneNode(true);
+                clonedNode.id = 'cloned-reshaper-cv-card';
+                
+                // Parse dynamic client-side optimized text details
+                const opt = optimizeTextClientSide(parsedRawCvEditor.textContent || parsedRawCvEditor.innerText);
+
+                // Apply dynamic metadata
+                const nameEl = clonedNode.querySelector('#cv-name-text');
+                if (nameEl) nameEl.textContent = opt.name;
+                
+                const titleEl = clonedNode.querySelector('#cv-title-text');
+                if (titleEl) titleEl.textContent = opt.title;
+
+                // Update specific parsed components inside the clone with elite rewrite content
+                const summaryP = clonedNode.querySelector('.cv-section-p');
+                if (summaryP) {
+                    summaryP.innerHTML = opt.summary;
+                }
+                
+                const skillsContainer = clonedNode.querySelector('#cv-skills-badges');
+                if (skillsContainer) {
+                    skillsContainer.innerHTML = '';
+                    opt.skills.forEach(skill => {
+                        const span = document.createElement('span');
+                        span.className = 'skill-tag';
+                        span.textContent = skill;
+                        skillsContainer.appendChild(span);
+                    });
+                }
+
+                // Append finalized CV into modal preview canvas
+                reshaperCvCanvas.appendChild(clonedNode);
+                reshaperCvCanvas.className = `cv-card template-${templateId}`;
+            }
+        }, 300);
+    }
+
+    // Live listen for edits inside the Boring draft raw editor panel to auto-reshape!
+    if (parsedRawCvEditor) {
+        parsedRawCvEditor.addEventListener('input', () => {
+            syncAndRenderReshaperCV(reshaperTemplateSelector.value || "1");
+        });
+    }
+
+    // Modal select template swap handler
+    if (reshaperTemplateSelector) {
+        reshaperTemplateSelector.addEventListener('change', () => {
+            syncAndRenderReshaperCV(reshaperTemplateSelector.value);
+        });
+    }
+
+    // Toggle live contenteditable edits inside Reshaper CV
+    let canvasEditActive = false;
+    if (btnReshaperEdit) {
+        btnReshaperEdit.addEventListener('click', (e) => {
+            e.preventDefault();
+            canvasEditActive = !canvasEditActive;
+            const clonedCard = document.getElementById('cloned-reshaper-cv-card');
+            
+            if (clonedCard) {
+                clonedCard.querySelectorAll('[contenteditable]').forEach(el => {
+                    el.setAttribute('contenteditable', canvasEditActive ? 'true' : 'false');
+                    if (canvasEditActive) {
+                        el.style.outline = '1.5px dashed var(--primary-blue)';
+                        el.style.background = 'rgba(37, 99, 235, 0.03)';
+                    } else {
+                        el.style.outline = 'none';
+                        el.style.background = 'transparent';
+                    }
+                });
+                btnReshaperEdit.innerHTML = canvasEditActive ? '✨ Lock & Save' : '🔧 Toggle Edit mode';
+                showToast(canvasEditActive ? "🔧 Interactive canvas modifications enabled." : "🔒 Changes locked into CVPilot builder.");
+            }
+        });
+    }
+
+    // Close buttons handlers
+    if (closeReshaperModal) {
+        closeReshaperModal.addEventListener('click', () => {
+            closeReshaperWorkspace();
+        });
+    }
+
+    if (btnReshaperBack) {
+        btnReshaperBack.addEventListener('click', () => {
+            closeReshaperWorkspace();
+        });
+    }
+
+    function closeReshaperWorkspace() {
+        if (reshaperModal) {
+            reshaperModal.classList.remove('active');
+            document.body.style.overflow = '';
+            resetFileUploader();
+        }
+    }
+
+    // Simulated high-fidelity recruiter PDF compiler
+    if (btnReshaperDownload) {
+        btnReshaperDownload.addEventListener('click', () => {
+            btnReshaperDownload.disabled = true;
+            btnReshaperDownload.innerHTML = `
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:16px;height:16px;margin-right:8px;animation:spin 1s infinite linear;display:inline-block;"><circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.2)"></circle><path d="M4 12a8 8 0 0 1 8-8V0C5.373 0 0 5.373 0 12h4z" fill="currentColor"></path></svg>
+                Compiling Recruiter Package...
+            `;
+            
+            setTimeout(() => {
+                btnReshaperDownload.disabled = false;
+                btnReshaperDownload.innerHTML = `
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:16px;height:16px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    Export & Download PDF
+                `;
+                showToast("📥 Success! Your AI-reshaped, ATS-optimized CV package downloaded.");
+                closeReshaperWorkspace();
+            }, 2200);
+        });
+    }
 
     // Restore previous workspace state on refresh/load
     function checkExistingSession() {
