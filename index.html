@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVPilot - Create a job-winning CV in minutes</title>
+    <meta name="description" content="Use CVPilot's AI-powered CV builder to choose a professional template, customize your details, and guide yourself toward your next opportunity. ATS optimized and recruiter ready.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Background Decorative Glows -->
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+    <div class="glow-orb orb-3"></div>
+
+    <!-- Navigation Header -->
+    <header class="main-header">
+        <div class="container nav-container">
+            <a href="#" class="logo" id="logo-link">
+                <!-- Paper Airplane SVG Icon -->
+                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+                <span class="logo-text-dark">CV</span><span class="logo-text-blue">Pilot</span>
+            </a>
+
+            <nav class="nav-links">
+                <a href="#features" class="nav-link" id="nav-features">Features</a>
+                <a href="#templates" class="nav-link" id="nav-templates">Templates</a>
+                <a href="#pricing" class="nav-link" id="nav-pricing">Pricing</a>
+                <a href="#faq" class="nav-link" id="nav-faq">FAQ</a>
+                <div class="dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" id="nav-resources">
+                        Resources
+                        <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </a>
+                </div>
+            </nav>
+
+            <div class="nav-actions">
+                <button class="btn btn-text" id="btn-login">Log in</button>
+                <button class="btn btn-primary" id="btn-signup">Sign Up Free</button>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="mobile-menu-toggle" id="mobile-menu-btn" aria-label="Toggle Menu">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container hero-container">
+            <!-- Left Column: Content -->
+            <div class="hero-content">
+                <!-- AI Badge -->
+                <div class="ai-badge" id="ai-badge-pill">
+                    <span class="ai-badge-icon">✦</span>
+                    <span class="ai-badge-text">AI-Powered CV Builder</span>
+                </div>
+
+                <!-- Main Title -->
+                <h1 class="hero-title" id="main-hero-title">
+                    Create a job-winning CV in 
+                    <span class="highlight-wrapper">
+                        minutes
+                        <!-- Brush Underline Vector -->
+                        <svg class="brush-underline" viewBox="0 0 160 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M3 9C30 3.5 85 1.5 157 5" stroke="#3B82F6" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </span>
+                </h1>
+
+                <!-- Subheading -->
+                <p class="hero-subtext" id="hero-subtext-p">
+                    Choose a professional template, customize your details, and let CVPilot guide you toward your next opportunity.
+                </p>
+
+                <!-- Call to Action Buttons -->
+                <div class="hero-actions">
+                    <button class="btn btn-primary btn-lg" id="hero-cta-build">
+                        Build My CV 
+                        <svg class="arrow-right-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </button>
+                    <button class="btn btn-secondary btn-lg" id="hero-cta-example">
+                        <svg class="play-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                        View Example
+                    </button>
+                </div>
+
+                <!-- Features Cards Row -->
+                <div class="features-row" id="features-cards-row">
+                    <div class="feature-mini-card">
+                        <div class="feature-mini-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                        </div>
+                        <span class="feature-mini-label">Professional Templates</span>
+                    </div>
+                    <div class="feature-mini-card">
+                        <div class="feature-mini-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                        </div>
+                        <span class="feature-mini-label">Easy to Customize</span>
+                    </div>
+                    <div class="feature-mini-card">
+                        <div class="feature-mini-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                        </div>
+                        <span class="feature-mini-label">ATS Optimized</span>
+                    </div>
+                    <div class="feature-mini-card">
+                        <div class="feature-mini-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                        </div>
+                        <span class="feature-mini-label">AI Suggestions</span>
+                    </div>
+                    <div class="feature-mini-card">
+                        <div class="feature-mini-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        </div>
+                        <span class="feature-mini-label">Download in PDF</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Interactive Mockup Workspace -->
+            <div class="hero-mockup-wrapper">
+                <!-- Floating Action Toolbar (Left of CV) -->
+                <div class="floating-toolbar" id="cv-floating-toolbar">
+                    <button class="toolbar-btn active" id="toolbar-btn-template" data-action="template">
+                        <div class="toolbar-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                        </div>
+                        <span class="toolbar-label">Template</span>
+                    </button>
+                    <button class="toolbar-btn" id="toolbar-btn-content" data-action="content">
+                        <div class="toolbar-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                        </div>
+                        <span class="toolbar-label">Content</span>
+                    </button>
+                    <button class="toolbar-btn" id="toolbar-btn-ai" data-action="ai">
+                        <div class="toolbar-icon purple-sparkle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                        </div>
+                        <span class="toolbar-label">AI Write</span>
+                    </button>
+                    <button class="toolbar-btn" id="toolbar-btn-optimize" data-action="optimize">
+                        <div class="toolbar-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        </div>
+                        <span class="toolbar-label">Optimize</span>
+                    </button>
+                </div>
+
+                <!-- Main CV Preview Card -->
+                <div class="cv-card template-1" id="main-cv-card">
+                    <!-- CV Header/Banner -->
+                    <div class="cv-header">
+                        <div class="cv-header-details">
+                            <h2 class="cv-name" id="cv-name-text">JAMES ANDERSON</h2>
+                            <p class="cv-title" id="cv-title-text">MARKETING MANAGER</p>
+                        </div>
+                        <div class="cv-photo-container">
+                            <img src="profile.png" alt="James Anderson Portrait" class="cv-photo" id="cv-profile-photo">
+                        </div>
+                    </div>
+
+                    <!-- CV Content Body -->
+                    <div class="cv-body">
+                        <!-- Left Main Column -->
+                        <div class="cv-main-col">
+                            <!-- Summary -->
+                            <div class="cv-section">
+                                <h3 class="cv-section-title">SUMMARY</h3>
+                                <p class="cv-section-p">Results-driven marketing manager with 5+ years of experience in digital marketing, brand strategy, and campaign management. Proven track record of increasing brand awareness and driving growth through data-driven strategies.</p>
+                            </div>
+
+                            <!-- Experience -->
+                            <div class="cv-section">
+                                <h3 class="cv-section-title">EXPERIENCE</h3>
+                                
+                                <div class="cv-item">
+                                    <div class="cv-item-header">
+                                        <h4 class="cv-item-role">Marketing Manager</h4>
+                                        <span class="cv-item-date">2021 – Present</span>
+                                    </div>
+                                    <p class="cv-item-company">BrightWave Solutions, New York, NY</p>
+                                    <ul class="cv-item-bullets">
+                                        <li>Led a team of 6 to develop and execute digital marketing campaigns</li>
+                                        <li>Increased website traffic by 45% and generated 35% more leads</li>
+                                        <li>Managed $500K+ annual marketing budget</li>
+                                    </ul>
+                                </div>
+
+                                <div class="cv-item">
+                                    <div class="cv-item-header">
+                                        <h4 class="cv-item-role">Marketing Specialist</h4>
+                                        <span class="cv-item-date">2018 – 2021</span>
+                                    </div>
+                                    <p class="cv-item-company">Creative Minds Agency, New York, NY</p>
+                                    <ul class="cv-item-bullets">
+                                        <li>Created content and social media strategies that improved engagement by 60%</li>
+                                        <li>Collaborated with cross-functional teams to launch successful products</li>
+                                        <li>Analyzed campaign performance and optimized ROI</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Education -->
+                            <div class="cv-section education-section">
+                                <h3 class="cv-section-title">EDUCATION</h3>
+                                <div class="cv-item">
+                                    <div class="cv-item-header">
+                                        <h4 class="cv-item-role">Bachelor of Business Administration</h4>
+                                        <span class="cv-item-date">2014 – 2018</span>
+                                    </div>
+                                    <p class="cv-item-company">New York University, New York, NY</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Sidebar Column -->
+                        <div class="cv-side-col">
+                            <!-- Contact Details -->
+                            <div class="cv-section">
+                                <h3 class="cv-section-title">CONTACT</h3>
+                                <ul class="cv-contact-list">
+                                    <li>
+                                        <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                                        <span class="contact-val">+1 (555) 123-4667</span>
+                                    </li>
+                                    <li>
+                                        <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                                        <span class="contact-val">james.anderson@email.com</span>
+                                    </li>
+                                    <li>
+                                        <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                        <span class="contact-val">New York, NY</span>
+                                    </li>
+                                    <li>
+                                        <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                                        <span class="contact-val">linkedin.com/in/james</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Skills Details -->
+                            <div class="cv-section">
+                                <h3 class="cv-section-title">SKILLS</h3>
+                                <div class="cv-skills-grid" id="cv-skills-badges">
+                                    <span class="skill-tag">Digital Marketing</span>
+                                    <span class="skill-tag">SEO</span>
+                                    <span class="skill-tag">Google Analytics</span>
+                                    <span class="skill-tag">Social Media</span>
+                                    <span class="skill-tag">Content Strategy</span>
+                                    <span class="skill-tag">Email Marketing</span>
+                                    <span class="skill-tag">Project Management</span>
+                                    <span class="skill-tag">Data Analysis</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Floating Template Selector (Top-Right of CV) -->
+                <div class="floating-card template-selector" id="floating-template-picker">
+                    <h4 class="floating-card-title">Choose Template</h4>
+                    <div class="template-grid">
+                        <div class="template-grid-item active" data-template="1" id="tpl-item-1" title="Modern Blue Banner">
+                            <div class="tpl-thumb tpl-thumb-1">
+                                <div class="tpl-thumb-hdr"></div>
+                                <div class="tpl-thumb-row">
+                                    <div class="tpl-thumb-main"></div>
+                                    <div class="tpl-thumb-side"></div>
+                                </div>
+                            </div>
+                            <svg class="check-badge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        </div>
+                        <div class="template-grid-item" data-template="2" id="tpl-item-2" title="Creative Sidebar">
+                            <div class="tpl-thumb tpl-thumb-2">
+                                <div class="tpl-thumb-row">
+                                    <div class="tpl-thumb-side"></div>
+                                    <div class="tpl-thumb-main"></div>
+                                </div>
+                            </div>
+                            <svg class="check-badge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        </div>
+                        <div class="template-grid-item" data-template="3" id="tpl-item-3" title="Minimalist Executive">
+                            <div class="tpl-thumb tpl-thumb-3">
+                                <div class="tpl-thumb-hdr centered"></div>
+                                <div class="tpl-thumb-line"></div>
+                                <div class="tpl-thumb-line"></div>
+                            </div>
+                            <svg class="check-badge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        </div>
+                        <div class="template-grid-item" data-template="4" id="tpl-item-4" title="Vibrant Brand Line">
+                            <div class="tpl-thumb tpl-thumb-4">
+                                <div class="tpl-thumb-row">
+                                    <div class="tpl-thumb-side border-accent"></div>
+                                    <div class="tpl-thumb-main"></div>
+                                </div>
+                            </div>
+                            <svg class="check-badge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        </div>
+                        <div class="template-grid-item" data-template="5" id="tpl-item-5" title="Emerald Sleek">
+                            <div class="tpl-thumb tpl-thumb-5">
+                                <div class="tpl-thumb-hdr border-emerald"></div>
+                                <div class="tpl-thumb-row">
+                                    <div class="tpl-thumb-main"></div>
+                                    <div class="tpl-thumb-side"></div>
+                                </div>
+                            </div>
+                            <svg class="check-badge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        </div>
+                        <div class="template-grid-item" data-template="6" id="tpl-item-6" title="Amethyst Split">
+                            <div class="tpl-thumb tpl-thumb-6">
+                                <div class="tpl-thumb-row">
+                                    <div class="tpl-thumb-side bg-amethyst"></div>
+                                    <div class="tpl-thumb-main"></div>
+                                </div>
+                            </div>
+                            <svg class="check-badge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        </div>
+                        <div class="template-grid-item" data-template="7" id="tpl-item-7" title="Elite Single Column">
+                            <div class="tpl-thumb tpl-thumb-7">
+                                <div class="tpl-thumb-hdr centered"></div>
+                                <div class="tpl-thumb-line"></div>
+                                <div class="tpl-thumb-line"></div>
+                                <div class="tpl-thumb-line"></div>
+                            </div>
+                            <svg class="check-badge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        </div>
+                        <div class="template-grid-item" data-template="8" id="tpl-item-8" title="Minimal Accent Column">
+                            <div class="tpl-thumb tpl-thumb-8">
+                                <div class="tpl-thumb-row">
+                                    <div class="tpl-thumb-side border-amber"></div>
+                                    <div class="tpl-thumb-main"></div>
+                                </div>
+                            </div>
+                            <svg class="check-badge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Floating ATS Score Card (Bottom-Right of CV) -->
+                <div class="floating-card ats-score-card" id="floating-ats-card">
+                    <h4 class="floating-card-title">ATS Score</h4>
+                    
+                    <div class="ats-gauge-wrapper">
+                        <!-- SVG Circular Progress -->
+                        <svg class="ats-gauge-svg" width="90" height="90" viewBox="0 0 100 100">
+                            <!-- Background Track -->
+                            <circle class="gauge-track" cx="50" cy="50" r="45" fill="none" stroke="#E2E8F0" stroke-width="8"></circle>
+                            <!-- Animated Value Line -->
+                            <circle class="gauge-value" id="ats-gauge-circle" cx="50" cy="50" r="45" fill="none" stroke="#10B981" stroke-width="8" stroke-dasharray="283" stroke-dashoffset="283" stroke-linecap="round"></circle>
+                        </svg>
+                        <!-- Centered Score Text -->
+                        <div class="ats-score-text">
+                            <span class="ats-number" id="ats-score-number">0</span>
+                        </div>
+                    </div>
+
+                    <div class="ats-match-label" id="ats-match-badge">Excellent Match!</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Banner Section -->
+    <section class="trust-banner">
+        <div class="container text-center">
+            <p class="trust-title" id="trust-banner-title">Trusted by job seekers worldwide</p>
+            <div class="logo-cloud" id="trust-logo-cloud">
+                <div class="logo-cloud-item">
+                    <span class="brand-logo-text">Google</span>
+                </div>
+                <div class="logo-cloud-item">
+                    <span class="brand-logo-text">Microsoft</span>
+                </div>
+                <div class="logo-cloud-item">
+                    <span class="brand-logo-text">amazon</span>
+                </div>
+                <div class="logo-cloud-item">
+                    <span class="brand-logo-text">facebook</span>
+                </div>
+                <div class="logo-cloud-item">
+                    <span class="brand-logo-text">Deloitte.</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Product Features Section -->
+    <section class="features-section" id="features">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2 class="section-title">Built to secure your next role</h2>
+                <p class="section-subtitle">Discover the powerful modules built to transform plain summaries into elite career documents.</p>
+            </div>
+            
+            <div class="features-grid">
+                <!-- Card 1: AI Assistant -->
+                <div class="feature-card animate-hover-up">
+                    <div class="feature-icon-wrapper purple-glow">
+                        <span class="feature-card-icon">✦</span>
+                    </div>
+                    <h3 class="feature-card-title">AI Copilot Rewrite</h3>
+                    <p class="feature-card-desc">Instantly draft crisp profiles, target action verbs, and inject relevant matching keys using high-level LLM capabilities tailored to your trade.</p>
+                </div>
+                <!-- Card 2: ATS Score Check -->
+                <div class="feature-card animate-hover-up">
+                    <div class="feature-icon-wrapper green-glow">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                    </div>
+                    <h3 class="feature-card-title">ATS Verification System</h3>
+                    <p class="feature-card-desc">Scan draft formats automatically. Parse headings and layouts to verify scanner compatibility and guarantee recruiters see your best side.</p>
+                </div>
+                <!-- Card 3: Modern Formatting -->
+                <div class="feature-card animate-hover-up">
+                    <div class="feature-icon-wrapper blue-glow">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                    </div>
+                    <h3 class="feature-card-title">Recruiter Ready Layouts</h3>
+                    <p class="feature-card-desc">Select premium typography, colors, and layout structure options engineered specifically by certified designers to win recruiters over in 6 seconds.</p>
+                </div>
+                <!-- Card 4: Quick Export -->
+                <div class="feature-card animate-hover-up">
+                    <div class="feature-icon-wrapper amber-glow">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    </div>
+                    <h3 class="feature-card-title">Instant PDF Exports</h3>
+                    <p class="feature-card-desc">Produce high-resolution documents in seconds. Formatted to perfect standard alignment, preventing overlapping columns or page spill issues.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Showcase Grid & Gallery Section -->
+    <section class="showcase-section" id="templates">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2 class="section-title">Designed by career experts</h2>
+                <p class="section-subtitle">Pick from our curated portfolio. Fully optimized to secure higher callbacks across any industry vertical.</p>
+            </div>
+
+            <div class="showcase-grid">
+                <!-- Slate Theme -->
+                <div class="showcase-item clickable-template-card" data-showcase-id="slate" title="Click to customize Modern Slate in Studio">
+                    <div class="showcase-image-box slate-gradient">
+                        <div class="showcase-hover-overlay">
+                            <span class="overlay-sparkle">✦</span>
+                            <span class="overlay-btn-text">Customize Style</span>
+                        </div>
+                        <div class="showcase-inner-cv header-blue">
+                            <div class="mini-cv-header">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <div class="mini-cv-name">James Anderson</div>
+                                        <div class="mini-cv-title">Marketing Manager</div>
+                                    </div>
+                                    <div style="width: 14px; height: 14px; border-radius: 50%; background: #3b82f6; color: white; font-size: 4.5px; font-weight: 800; display: flex; align-items: center; justify-content: center; transform: scale(1.2);">JA</div>
+                                </div>
+                                <div class="mini-cv-divider"></div>
+                            </div>
+                            <div class="mini-cv-flex" style="flex: 1;">
+                                <div class="mini-cv-col-main">
+                                    <div class="mini-cv-section-title" style="margin-top: 0;">Experience</div>
+                                    <div class="mini-cv-item">
+                                        <div class="mini-cv-item-title">Marketing Lead</div>
+                                        <div class="mini-cv-item-company">Tech Solutions • 2021-Pres</div>
+                                        <ul class="mini-cv-bullets">
+                                            <li>Scaled traffic by 45% using SEO</li>
+                                            <li>Managed agile team of 6</li>
+                                        </ul>
+                                    </div>
+                                    <div class="mini-cv-item">
+                                        <div class="mini-cv-item-title">Marketing Specialist</div>
+                                        <div class="mini-cv-item-company">Growth Corp • 2018-2021</div>
+                                    </div>
+                                </div>
+                                <div class="mini-cv-col-side">
+                                    <div class="mini-cv-section-title" style="margin-top: 0;">Skills</div>
+                                    <div class="mini-cv-tag">Digital Mktg</div>
+                                    <div class="mini-cv-tag">SEO</div>
+                                    <div class="mini-cv-tag">Google Anal.</div>
+                                    <div class="mini-cv-tag">Strategy</div>
+                                    <div class="mini-cv-section-title">Contact</div>
+                                    <div class="mini-cv-text">📞 +1 555 123-4567</div>
+                                    <div class="mini-cv-text">✉️ james.a@email.com</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="showcase-meta">
+                        <h4 class="showcase-title">Modern Slate</h4>
+                        <span class="showcase-tag">Tech & Finance</span>
+                    </div>
+                </div>
+                
+                <!-- Creative Purple Theme -->
+                <div class="showcase-item clickable-template-card" data-showcase-id="purple" title="Click to customize Creative Purple in Studio">
+                    <div class="showcase-image-box purple-gradient">
+                        <div class="showcase-hover-overlay">
+                            <span class="overlay-sparkle">✦</span>
+                            <span class="overlay-btn-text">Customize Style</span>
+                        </div>
+                        <div class="showcase-inner-cv layout-split" style="padding: 0;">
+                            <div class="showcase-cv-sidebar" style="background: #f5f3ff; height: 100%; border-right: 1px solid #ddd6fe; padding: 10px 4px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 6px;">
+                                <div style="width: 18px; height: 18px; border-radius: 50%; background: #8b5cf6; color: white; font-size: 5px; font-weight: 800; display: flex; align-items: center; justify-content: center; border: 1.5px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">JA</div>
+                                <div style="text-align: center; width: 100%;">
+                                    <div class="mini-cv-section-title" style="color: #6d28d9; border: none; font-size: 3.8px; margin-bottom: 2px;">Contact</div>
+                                    <div class="mini-cv-text" style="font-size: 3px; scale: 0.9;">✉️ james.a</div>
+                                    <div class="mini-cv-text" style="font-size: 3px; scale: 0.9;">🌐 linkedin</div>
+                                </div>
+                                <div style="text-align: center; width: 100%;">
+                                    <div class="mini-cv-section-title" style="color: #6d28d9; border: none; font-size: 3.8px; margin-bottom: 2px;">Skills</div>
+                                    <span class="mini-cv-tag" style="font-size: 2.8px; background: #e0e7ff; color: #4338ca;">SEO</span>
+                                    <span class="mini-cv-tag" style="font-size: 2.8px; background: #e0e7ff; color: #4338ca;">Analytics</span>
+                                </div>
+                            </div>
+                            <div style="padding: 10px 8px 10px 4px; display: flex; flex-direction: column; justify-content: flex-start; gap: 4px; overflow: hidden;">
+                                <div class="mini-cv-name" style="color: #6d28d9; font-size: 7.5px;">James Anderson</div>
+                                <div class="mini-cv-title" style="color: var(--slate-600); font-size: 4.5px;">Marketing Manager</div>
+                                <div class="mini-cv-divider" style="margin: 1px 0 2px 0;"></div>
+                                
+                                <div class="mini-cv-section-title" style="color: #6d28d9; border-bottom: 1px solid #ddd6fe; margin-top: 1px;">Summary</div>
+                                <p class="mini-cv-text" style="font-size: 3.2px; line-height: 1.25;">Results-driven marketer with 5+ years building campaigns.</p>
+                                
+                                <div class="mini-cv-section-title" style="color: #6d28d9; border-bottom: 1px solid #ddd6fe; margin-top: 1px;">Experience</div>
+                                <div class="mini-cv-item">
+                                    <div class="mini-cv-item-title" style="font-size: 3.8px;">Marketing Lead</div>
+                                    <div class="mini-cv-item-company" style="font-size: 3.2px;">Tech Solutions • 2021-Pres</div>
+                                    <ul class="mini-cv-bullets" style="padding-left: 3px;">
+                                        <li style="font-size: 3.2px;">Accelerated growth by 35%</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="showcase-meta">
+                        <h4 class="showcase-title">Creative Purple</h4>
+                        <span class="showcase-tag">Marketing & Design</span>
+                    </div>
+                </div>
+
+                <!-- Executive Minimalist Theme -->
+                <div class="showcase-item clickable-template-card" data-showcase-id="minimalist" title="Click to customize Executive Minimalist in Studio">
+                    <div class="showcase-image-box dark-gradient">
+                        <div class="showcase-hover-overlay">
+                            <span class="overlay-sparkle">✦</span>
+                            <span class="overlay-btn-text">Customize Style</span>
+                        </div>
+                        <div class="showcase-inner-cv layout-clean" style="font-family: Georgia, serif; padding: 12px 14px;">
+                            <div style="text-align: center; width: 100%;">
+                                <div class="mini-cv-name" style="font-size: 8px; font-weight: 500; font-family: Georgia, serif; letter-spacing: 0.05em;">JAMES ANDERSON</div>
+                                <div class="mini-cv-title" style="color: var(--slate-600); font-size: 4px; font-family: Georgia, serif; letter-spacing: 0.1em; border-bottom: 1px solid #222; padding-bottom: 2px; margin-bottom: 3px;">MARKETING MANAGER</div>
+                                <div style="display: flex; gap: 4px; justify-content: center; font-size: 3px; color: var(--slate-500); margin-bottom: 4px;">
+                                    <span>james.a@email.com</span> • <span>+1 555</span> • <span>New York, NY</span>
+                                </div>
+                            </div>
+                            
+                            <div style="width: 100%;">
+                                <div class="mini-cv-section-title" style="border-bottom: 1px solid var(--slate-300); font-family: Georgia, serif; font-size: 4.5px; font-weight: 700; color: #111; margin-top: 1px;">Summary</div>
+                                <p class="mini-cv-text" style="font-family: Georgia, serif; font-size: 3.5px; color: #333; line-height: 1.3; text-align: justify;">Marketing Manager with 5+ years driving brand scaling and high-impact digital initiatives.</p>
+                            </div>
+                            
+                            <div style="width: 100%;">
+                                <div class="mini-cv-section-title" style="border-bottom: 1px solid var(--slate-300); font-family: Georgia, serif; font-size: 4.5px; font-weight: 700; color: #111; margin-top: 2px;">Experience</div>
+                                <div class="mini-cv-item" style="margin-bottom: 2px;">
+                                    <div style="display: flex; justify-content: space-between; font-size: 3.8px; font-weight: 700;">
+                                        <span>Marketing Lead</span>
+                                        <span>2021 – Present</span>
+                                    </div>
+                                    <div class="mini-cv-item-company" style="font-family: Georgia, serif; font-size: 3.5px; margin-bottom: 1px;">Tech Solutions, NY</div>
+                                    <ul class="mini-cv-bullets" style="padding-left: 6px; list-style-type: square;">
+                                        <li style="font-family: Georgia, serif; font-size: 3.2px;">Increased conversion rates by 28%.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="showcase-meta">
+                        <h4 class="showcase-title">Executive Minimalist</h4>
+                        <span class="showcase-tag">Legal & Management</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing-section" id="pricing">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2 class="section-title">Simple, transparent pricing</h2>
+                <p class="section-subtitle">Invest in your career growth. Flexible plans configured to meet any phase of your job search journey.</p>
+                
+                <!-- Pricing Switch Toggle -->
+                <div class="pricing-toggle-container">
+                    <span class="toggle-label active" id="toggle-monthly">Monthly</span>
+                    <button class="pricing-toggle-switch" id="pricing-billing-switch" aria-label="Toggle Billing Interval">
+                        <span class="pricing-switch-handle"></span>
+                    </button>
+                    <span class="toggle-label" id="toggle-yearly">Yearly</span>
+                    <span class="pricing-discount-badge">Save 20%</span>
+                </div>
+            </div>
+
+            <div class="pricing-plans-grid">
+                <!-- Plan 1: Free -->
+                <div class="pricing-card">
+                    <h3 class="plan-name">Basic Sandbox</h3>
+                    <p class="plan-subtitle">Perfect for exploring custom builders.</p>
+                    <div class="plan-price-block">
+                        <span class="currency">$</span>
+                        <span class="price-value" id="price-basic">0</span>
+                        <span class="billing-period" id="period-basic">/ month</span>
+                    </div>
+                    <hr class="plan-divider">
+                    <ul class="plan-features-list">
+                        <li>
+                            <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            1 Premium CV layout style
+                        </li>
+                        <li>
+                            <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            Manual text customization
+                        </li>
+                        <li>
+                            <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            Standard ATS formatting
+                        </li>
+                        <li class="unsupported">
+                            <svg class="cross-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                            AI Assistant suggestions
+                        </li>
+                        <li class="unsupported">
+                            <svg class="cross-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                            Instant high-res PDF exports
+                        </li>
+                    </ul>
+                    <button class="btn btn-secondary w-full" id="btn-select-free">Get Started</button>
+                </div>
+
+                <!-- Plan 2: Pro (Most Popular) -->
+                <div class="pricing-card popular">
+                    <div class="popular-ribbon">Most Popular</div>
+                    <h3 class="plan-name text-white">Pilot Professional</h3>
+                    <p class="plan-subtitle text-slate-400">Unlock your ultimate dashboard toolkit.</p>
+                    <div class="plan-price-block text-white">
+                        <span class="currency">$</span>
+                        <span class="price-value text-white" id="price-pro">12</span>
+                        <span class="billing-period text-slate-400" id="period-pro">/ month</span>
+                    </div>
+                    <hr class="plan-divider dark">
+                    <ul class="plan-features-list text-white">
+                        <li>
+                            <svg class="check-icon active" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            Unlimited premium CV layouts
+                        </li>
+                        <li>
+                            <svg class="check-icon active" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            Full AI Copilot assistance write-ups
+                        </li>
+                        <li>
+                            <svg class="check-icon active" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            ATS Verification score analyzer
+                        </li>
+                        <li>
+                            <svg class="check-icon active" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            Unlimited PDF high-res exports
+                        </li>
+                        <li>
+                            <svg class="check-icon active" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            Priority support ticket routing
+                        </li>
+                    </ul>
+                    <button class="btn btn-primary w-full" id="btn-select-pro">Go Professional</button>
+                </div>
+
+                <!-- Plan 3: Executive -->
+                <div class="pricing-card">
+                    <h3 class="plan-name">Executive Elite</h3>
+                    <p class="plan-subtitle">Direct, personal placement coaching.</p>
+                    <div class="plan-price-block">
+                        <span class="currency">$</span>
+                        <span class="price-value" id="price-exec">29</span>
+                        <span class="billing-period" id="period-exec">/ month</span>
+                    </div>
+                    <hr class="plan-divider">
+                    <ul class="plan-features-list">
+                        <li>
+                            <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            Everything in Pilot Professional
+                        </li>
+                        <li>
+                            <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            1-on-1 human expert resume review
+                        </li>
+                        <li>
+                            <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            Custom design and custom branding
+                        </li>
+                        <li>
+                            <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            Premium high-priority ATS listing
+                        </li>
+                    </ul>
+                    <button class="btn btn-secondary w-full" id="btn-select-exec">Choose Executive</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section" id="faq">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                <p class="section-subtitle">Got questions? We've got answers. Explore details about CVPilot calculator parameters below.</p>
+            </div>
+
+            <div class="faq-accordion-wrapper">
+                <!-- FAQ Item 1 -->
+                <div class="faq-item">
+                    <button class="faq-trigger" id="faq-trigger-1" aria-expanded="false">
+                        <span class="faq-question">What is an ATS score and how is it calculated?</span>
+                        <span class="faq-toggle-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </span>
+                    </button>
+                    <div class="faq-content" id="faq-content-1">
+                        <p class="faq-answer">An ATS (Applicant Tracking System) score calculates how effectively resume text parsing algorithms read your headings, spacing, layout alignments, and target skills keywords. CVPilot matches your CV parameters against real system scanners to maximize compliance and callback rates.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="faq-item">
+                    <button class="faq-trigger" id="faq-trigger-2" aria-expanded="false">
+                        <span class="faq-question">Can I customize my colors and styling details?</span>
+                        <span class="faq-toggle-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </span>
+                    </button>
+                    <div class="faq-content" id="faq-content-2">
+                        <p class="faq-answer">Absolutely! Our horizontal grid builder elements permit updating layout templates, swapping sidebar alignments, removing avatars, editing professional details, and selecting customized colors that represent your brand.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="faq-item">
+                    <button class="faq-trigger" id="faq-trigger-3" aria-expanded="false">
+                        <span class="faq-question">Is it possible to download my completed CV in PDF?</span>
+                        <span class="faq-toggle-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </span>
+                    </button>
+                    <div class="faq-content" id="faq-content-3">
+                        <p class="faq-answer">Yes, our professional and executive plans let you immediately export high-resolution pixel-perfect PDFs designed with flawless margins, clean typography rendering, and strict standard column alignments.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 4 -->
+                <div class="faq-item">
+                    <button class="faq-trigger" id="faq-trigger-4" aria-expanded="false">
+                        <span class="faq-question">How does the AI Copilot rewrite feature work?</span>
+                        <span class="faq-toggle-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </span>
+                    </button>
+                    <div class="faq-content" id="faq-content-4">
+                        <p class="faq-answer">Our custom AI model matches the text in your experience blocks and skills categories against specific job listing queries. It automatically optimizes descriptions, inserts powerful action verbs, and scales up keyword matching to boost ATS scanners.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dynamic SaaS Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-top">
+                <!-- Branding column -->
+                <div class="footer-brand-col">
+                    <a href="#" class="logo footer-logo">
+                        <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                        <span class="logo-text-dark text-white">CV</span><span class="logo-text-blue">Pilot</span>
+                    </a>
+                    <p class="footer-brand-tagline">Create job-winning resumes in minutes. Powered by state-of-the-art AI systems engineered for scanner compliance.</p>
+                    
+                    <div class="footer-social-icons">
+                        <a href="#" aria-label="Twitter">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+                        </a>
+                        <a href="#" aria-label="LinkedIn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                        </a>
+                        <a href="#" aria-label="Github">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Link columns -->
+                <div class="footer-links-col">
+                    <h4 class="footer-col-title">Product</h4>
+                    <ul class="footer-links-list">
+                        <li><a href="#features">AI CV Builder</a></li>
+                        <li><a href="#templates">Layout Library</a></li>
+                        <li><a href="#pricing">Upgrade Plans</a></li>
+                        <li><a href="#faq">FAQ Help</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links-col">
+                    <h4 class="footer-col-title">Resources</h4>
+                    <ul class="footer-links-list">
+                        <li><a href="#">Career Advisory</a></li>
+                        <li><a href="#">Resume Advice</a></li>
+                        <li><a href="#">Keyword Database</a></li>
+                        <li><a href="#">Application Strategy</a></li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter Subscription input -->
+                <div class="footer-newsletter-col">
+                    <h4 class="footer-col-title">Stay Updated</h4>
+                    <p class="newsletter-subtitle">Subscribe to receive monthly application guides, modern CV keywords, and career trends.</p>
+                    <form class="newsletter-form" id="newsletter-form" action="#" method="POST">
+                        <input type="email" placeholder="Enter your email" required class="newsletter-input" id="newsletter-email" aria-label="Newsletter Email Address">
+                        <button type="submit" class="btn btn-primary" id="btn-subscribe-submit">
+                            <svg class="send-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <hr class="footer-divider">
+
+            <div class="footer-bottom">
+                <p class="footer-copyright">&copy; 2026 CVPilot Inc. All rights reserved. Created for professional placement.</p>
+                <div class="footer-legal-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookies Setting</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- App Scripts -->
+    <script src="app.js"></script>
+
+    <!-- Premium Template Customizer Studio Overlay Modal -->
+    <div class="studio-modal-overlay" id="studio-modal">
+        <div class="studio-modal-container">
+            <!-- Header/Topbar -->
+            <div class="studio-modal-header">
+                <div class="studio-modal-brand">
+                    <span class="studio-badge">STUDIO</span>
+                    <h3>CVPilot Template Customizer</h3>
+                </div>
+                <button class="studio-close-btn" id="close-studio-modal" aria-label="Close Studio Workspace">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            
+            <!-- Workspace Body -->
+            <div class="studio-modal-body">
+                <!-- Left Side: Control Panel -->
+                <div class="studio-control-panel">
+                    <!-- Theme Color Options -->
+                    <div class="studio-widget-section">
+                        <h4 class="widget-section-title">Design Palettes</h4>
+                        <p class="widget-section-subtitle">Switch color theme instantly</p>
+                        <div class="color-palette-picker" id="modal-color-picker">
+                            <!-- Populated dynamically via JS based on selected card -->
+                        </div>
+                    </div>
+
+                    <!-- Typography options -->
+                    <div class="studio-widget-section">
+                        <h4 class="widget-section-title">Typography Settings</h4>
+                        <p class="widget-section-subtitle">Pick curated font pairings</p>
+                        <div class="font-picker-buttons" id="modal-font-picker">
+                            <button class="font-picker-btn active" data-font="sans">
+                                <span class="font-name-label" style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700;">Jakarta Sans</span>
+                            </button>
+                            <button class="font-picker-btn" data-font="serif">
+                                <span class="font-name-label" style="font-family: Georgia, serif; font-weight: 700;">Georgia Serif</span>
+                            </button>
+                            <button class="font-picker-btn" data-font="monospace">
+                                <span class="font-name-label" style="font-family: 'Courier New', Courier, monospace; font-weight: 700;">Tech Monospace</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- AI Suggestion Optimization Box -->
+                    <div class="studio-widget-section ai-optimization-box">
+                        <div class="ai-widget-header">
+                            <span class="ai-sparkle-icon">✦</span>
+                            <h4 class="widget-section-title" style="margin: 0;">AI Copilot Assistant</h4>
+                        </div>
+                        <p class="widget-section-subtitle">Inject premium matching action verbs and metrics keywords.</p>
+                        <button class="btn btn-primary w-full btn-ai-modal-optimize" id="modal-ai-optimize-btn">
+                            ✦ AI Optimize Resume
+                        </button>
+                    </div>
+
+                    <!-- Real-Time ATS Parsing Check -->
+                    <div class="studio-widget-section">
+                        <h4 class="widget-section-title">ATS Readability Index</h4>
+                        <div class="modal-ats-gauge-container">
+                            <div class="modal-ats-gauge-ring">
+                                <svg width="74" height="74" viewBox="0 0 100 100">
+                                    <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(226, 232, 240, 0.5)" stroke-width="7.5"></circle>
+                                    <circle id="modal-ats-progress" cx="50" cy="50" r="42" fill="none" stroke="#10b981" stroke-width="7.5" stroke-dasharray="264" stroke-dashoffset="264" stroke-linecap="round"></circle>
+                                </svg>
+                                <div class="modal-ats-score-label">
+                                    <span id="modal-ats-score-num">0</span>%
+                                </div>
+                            </div>
+                            <div class="modal-ats-meta">
+                                <h5 id="modal-ats-status-badge">Calculating...</h5>
+                                <p>Recruiter readability based on spacing and parser criteria.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Export and download -->
+                    <div class="studio-widget-section action-buttons" style="margin-top: auto; padding-top: 15px; border-top: 1px solid rgba(226,232,240,0.8);">
+                        <button class="btn btn-primary w-full" id="modal-btn-download" style="background: linear-gradient(135deg, var(--primary-blue) 0%, #1d4ed8 100%);">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width: 15px; height: 15px; margin-right: 8px; vertical-align: -1px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                            Export & Download PDF
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right Side: Live Interactive Resume Canvas -->
+                <div class="studio-canvas-panel">
+                    <div class="studio-canvas-scroll-container">
+                        <div class="studio-interactive-cv-paper" id="modal-cv-canvas">
+                            <!-- Populated dynamically based on click card -->
+                        </div>
+                    </div>
+                    
+                    <!-- Bottom Editing Tooltip -->
+                    <div class="canvas-editor-tip">
+                        <span class="tip-icon">✨</span>
+                        <span><b>Live Workspace Unlocked:</b> Click any text block to edit. Changes save locally in real-time.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Premium Authentication Overlay Modal -->
+    <div class="auth-modal-overlay" id="auth-modal">
+        <div class="auth-modal-container">
+            <!-- Left Side: Brand Accent Block -->
+            <div class="auth-accent-side">
+                <div class="auth-accent-blur-1"></div>
+                <div class="auth-accent-blur-2"></div>
+                <div class="auth-brand-info">
+                    <span class="auth-brand-badge">✦ AI COPILOT</span>
+                    <h2>Unlock the Ultimate Career Dashboard</h2>
+                    <ul class="auth-features-list">
+                        <li>
+                            <span class="feat-icon">✨</span>
+                            <div>
+                                <h5>100% ATS-Compliant Layouts</h5>
+                                <p>Designed by placement recruiters to clear parser filters.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="feat-icon">✦</span>
+                            <div>
+                                <h5>AI-Copilot Real-time Suggestions</h5>
+                                <p>Rewrite descriptions with target keywords in one-click.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="feat-icon">📈</span>
+                            <div>
+                                <h5>High-Res Unlimited PDF Export</h5>
+                                <p>Download vector graphics PDF formats without limitations.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Right Side: Interactive Forms -->
+            <div class="auth-form-side">
+                <!-- Close Button -->
+                <button class="auth-close-btn" id="close-auth-modal" aria-label="Close Authentication">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+
+                <!-- State Tab Toggles -->
+                <div class="auth-tabs">
+                    <button class="auth-tab-btn active" id="tab-login" data-target="login-form-container">Log In</button>
+                    <button class="auth-tab-btn" id="tab-signup" data-target="signup-form-container">Sign Up</button>
+                    <div class="auth-tab-indicator"></div>
+                </div>
+
+                <!-- FORM 1: LOGIN -->
+                <div class="auth-form-wrapper active" id="login-form-container">
+                    <div class="form-header">
+                        <h3>Welcome Back</h3>
+                        <p>Access your recruiter-approved resume canvas.</p>
+                    </div>
+                    <form id="auth-login-form">
+                        <div class="form-group">
+                            <label for="login-email">Email Address</label>
+                            <div class="input-wrapper">
+                                <span class="input-icon">✉</span>
+                                <input type="email" id="login-email" placeholder="name@company.com" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="label-row">
+                                <label for="login-password">Password</label>
+                                <a href="#" class="forgot-link">Forgot?</a>
+                            </div>
+                            <div class="input-wrapper">
+                                <span class="input-icon">🔒</span>
+                                <input type="password" id="login-password" placeholder="••••••••" required>
+                                <button type="button" class="password-toggle-btn" aria-label="Toggle Password Visibility">
+                                    <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                </button>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-full btn-auth-submit" id="btn-login-submit">
+                            Sign In to My Dashboard
+                        </button>
+                    </form>
+                    
+                    <div class="auth-divider">
+                        <span>or continue with</span>
+                    </div>
+                    <div class="social-auth-grid">
+                        <button class="btn btn-secondary social-btn" type="button">
+                            <img src="https://lh3.googleusercontent.com/COxitPIgdm18OIy4g1gKpxUeLs5tVrrC3F5Oh3v09hM632v6qVv4HysGv2LwFWhg848" alt="Google" style="width: 16px; height: 16px; margin-right: 8px;">
+                            Google
+                        </button>
+                        <button class="btn btn-secondary social-btn" type="button">
+                            <svg viewBox="0 0 24 24" fill="currentColor" style="width: 16px; height: 16px; margin-right: 8px; color: #1f2937;"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482C19.138 20.193 22 16.44 22 12.017 22 6.484 17.522 2 12 2z"></path></svg>
+                            GitHub
+                        </button>
+                    </div>
+                </div>
+
+                <!-- FORM 2: SIGN UP -->
+                <div class="auth-form-wrapper" id="signup-form-container">
+                    <div class="form-header">
+                        <h3>Create Account</h3>
+                        <p>Start designing your high-impact resume today.</p>
+                    </div>
+                    <form id="auth-signup-form">
+                        <div class="form-group">
+                            <label for="signup-name">Full Name</label>
+                            <div class="input-wrapper">
+                                <span class="input-icon">👤</span>
+                                <input type="text" id="signup-name" placeholder="James Anderson" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="signup-email">Email Address</label>
+                            <div class="input-wrapper">
+                                <span class="input-icon">✉</span>
+                                <input type="email" id="signup-email" placeholder="name@company.com" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="signup-password">Password</label>
+                            <div class="input-wrapper">
+                                <span class="input-icon">🔒</span>
+                                <input type="password" id="signup-password" placeholder="Min. 8 characters" required>
+                                <button type="button" class="password-toggle-btn" aria-label="Toggle Password Visibility">
+                                    <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                </button>
+                            </div>
+                            <!-- Animated Password Strength Bar -->
+                            <div class="password-strength-container">
+                                <div class="strength-bar-row">
+                                    <div class="strength-bar" id="strength-segment-1"></div>
+                                    <div class="strength-bar" id="strength-segment-2"></div>
+                                    <div class="strength-bar" id="strength-segment-3"></div>
+                                    <div class="strength-bar" id="strength-segment-4"></div>
+                                </div>
+                                <span class="strength-label" id="password-strength-text">Password is empty</span>
+                            </div>
+                        </div>
+                        <div class="form-checkbox">
+                            <input type="checkbox" id="signup-terms" required>
+                            <label for="signup-terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-full btn-auth-submit" id="btn-signup-submit">
+                            Create Free Workspace
+                        </button>
+                    </form>
+                </div>
+
+                <!-- SUCCESS CELEBRATION CARD OVERLAY -->
+                <div class="auth-success-overlay" id="auth-success-overlay">
+                    <div class="success-card-content">
+                        <div class="success-checkmark-circle">
+                            <svg class="success-checkmark" viewBox="0 0 52 52">
+                                <circle class="success-checkmark-circle-svg" cx="26" cy="26" r="25" fill="none"></circle>
+                                <path class="success-checkmark-check-svg" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"></path>
+                            </svg>
+                        </div>
+                        <h3>Success! Account Unlocked</h3>
+                        <p id="auth-success-message">Welcome to your CVPilot Premium dashboard.</p>
+                        <div class="success-meta-loader">
+                            <div class="meta-dot"></div>
+                            <div class="meta-dot"></div>
+                            <div class="meta-dot"></div>
+                            <span>Provisioning premium widgets...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
