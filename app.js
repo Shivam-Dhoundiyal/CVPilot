@@ -1402,6 +1402,15 @@ document.addEventListener('DOMContentLoaded', () => {
         // Clear local storage persistence
         localStorage.removeItem('cvpilot_session');
         
+        // Sign out of Firebase Auth if active
+        if (window.firebaseAuth) {
+            window.firebaseAuth.signOut().then(() => {
+                console.log("🔥 Firebase User session signed out successfully.");
+            }).catch(err => {
+                console.error("Firebase Sign-out error: ", err);
+            });
+        }
+        
         // Reset Nav Actions
         navActionsContainer.innerHTML = `
             <button class="btn btn-text" id="btn-login">Log in</button>
@@ -1929,6 +1938,11 @@ Microsoft Office, Communication, Teamwork, Social Media, Google Docs`;
             }
         }
     }
+    
+    // Expose helpers globally for module-based authentication access
+    window.applyLoggedInHeader = applyLoggedInHeader;
+    window.showToast = showToast;
+    window.performLogout = performLogout;
     
     // Run auto-login restoration scan
     checkExistingSession();

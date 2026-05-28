@@ -1000,7 +1000,7 @@
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
-        import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
         import { getFirestore } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         // Your web app's Firebase configuration
@@ -1028,6 +1028,44 @@
             window.firebaseDb = db;
 
             console.log("🔥 Firebase initialized successfully! Live analytics, auth, and database modules ready.");
+
+            // Bind click handler for dynamic Google login
+            const googleBtn = document.getElementById('btn-google-login');
+            if (googleBtn) {
+                googleBtn.addEventListener('click', () => {
+                    const provider = new GoogleAuthProvider();
+                    
+                    if (window.showToast) {
+                        window.showToast("⚡ Connecting to Google secure gateway...");
+                    }
+                    
+                    signInWithPopup(auth, provider)
+                        .then((result) => {
+                            const user = result.user;
+                            
+                            // Close auth modal
+                            const authModal = document.getElementById('auth-modal');
+                            if (authModal) {
+                                authModal.classList.remove('active');
+                            }
+                            
+                            // Apply logged-in UI state
+                            if (window.applyLoggedInHeader) {
+                                window.applyLoggedInHeader(user.displayName || user.email);
+                            }
+                            
+                            if (window.showToast) {
+                                window.showToast(`✨ Google authentication successful! Welcome, ${user.displayName || 'Developer'}!`);
+                            }
+                        })
+                        .catch((error) => {
+                            console.error("Google Sign-In Error: ", error);
+                            if (window.showToast) {
+                                window.showToast("⚠️ Google Authentication failed or closed.");
+                            }
+                        });
+                });
+            }
         } catch (error) {
             console.error("⚠️ Error initializing Firebase services: ", error);
         }
@@ -1222,11 +1260,11 @@
                         <span>or continue with</span>
                     </div>
                     <div class="social-auth-grid">
-                        <button class="btn btn-secondary social-btn" type="button">
+                        <button class="btn btn-secondary social-btn" type="button" id="btn-google-login">
                             <img src="https://lh3.googleusercontent.com/COxitPIgdm18OIy4g1gKpxUeLs5tVrrC3F5Oh3v09hM632v6qVv4HysGv2LwFWhg848" alt="Google" style="width: 16px; height: 16px; margin-right: 8px;">
                             Google
                         </button>
-                        <button class="btn btn-secondary social-btn" type="button">
+                        <button class="btn btn-secondary social-btn" type="button" id="btn-github-login">
                             <svg viewBox="0 0 24 24" fill="currentColor" style="width: 16px; height: 16px; margin-right: 8px; color: #1f2937;"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482C19.138 20.193 22 16.44 22 12.017 22 6.484 17.522 2 12 2z"></path></svg>
                             GitHub
                         </button>
