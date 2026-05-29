@@ -763,6 +763,24 @@ document.addEventListener('DOMContentLoaded', () => {
             { name: "Burgundy Corporate", primary: "#881337", dark: "#fff1f2" },
             { name: "Deep Teal", primary: "#0f766e", dark: "#f0fdfa" },
             { name: "Platinum Noir", primary: "#0f172a", dark: "#f8fafc" }
+        ],
+        emerald: [
+            { name: "Emerald Mint (Default)", primary: "#10b981", dark: "#064e3b" },
+            { name: "Forest Sage", primary: "#059669", dark: "#022c22" },
+            { name: "Teal Corporate", primary: "#0d9488", dark: "#111827" },
+            { name: "Cyberpunk Green", primary: "#22c55e", dark: "#090d16" }
+        ],
+        amethyst: [
+            { name: "Amethyst Split (Default)", primary: "#7c3aed", dark: "#faf5ff" },
+            { name: "Pink Magenta", primary: "#d946ef", dark: "#fdf4ff" },
+            { name: "Midnight Indigo", primary: "#4f46e5", dark: "#e0e7ff" },
+            { name: "Warm Amber", primary: "#f59e0b", dark: "#fef3c7" }
+        ],
+        saffron: [
+            { name: "Saffron Gold (Default)", primary: "#d97706", dark: "#ffffff" },
+            { name: "Crimson Red", primary: "#ef4444", dark: "#fff5f5" },
+            { name: "Burnt Orange", primary: "#ea580c", dark: "#fff7ed" },
+            { name: "Slate Dark", primary: "#334155", dark: "#f8fafc" }
         ]
     };
 
@@ -788,12 +806,12 @@ document.addEventListener('DOMContentLoaded', () => {
             sidebar.style.borderColor = palette.primary + '25';
             
             // Adapt sidebar text color if dark or light background
-            const isDarkBg = palette.dark === '#1e1b4b';
-            sidebar.style.color = isDarkBg ? '#e0e7ff' : '#475569';
+            const isDarkBg = palette.dark === '#1e1b4b' || palette.dark === '#e0e7ff';
+            sidebar.style.color = isDarkBg ? '#475569' : '#475569';
             
             const sidebarTexts = sidebar.querySelectorAll('.mini-cv-text');
             sidebarTexts.forEach(t => {
-                t.style.color = isDarkBg ? '#c7d2fe' : '#475569';
+                t.style.color = isDarkBg ? '#475569' : '#475569';
             });
         }
         
@@ -831,11 +849,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function applyPalette(themeId, palette) {
-        if (themeId === 'slate') {
+        if (themeId === 'slate' || themeId === 'emerald') {
             applySlatePalette(palette);
-        } else if (themeId === 'purple') {
+        } else if (themeId === 'purple' || themeId === 'amethyst') {
             applyPurplePalette(palette);
-        } else if (themeId === 'minimalist') {
+        } else if (themeId === 'minimalist' || themeId === 'saffron') {
             applyMinimalistPalette(palette);
         }
     }
@@ -938,7 +956,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     const length = el.textContent.length;
                     // Adding content slightly raises score, removing lowers it, simulating scanner checks
                     const fluctuation = Math.min(Math.floor(length / 22), 3);
-                    const baseScore = activeModalShowcaseId === 'slate' ? 95 : (activeModalShowcaseId === 'purple' ? 92 : 89);
+                    const baseScore = (activeModalShowcaseId === 'slate' || activeModalShowcaseId === 'emerald') ? 95 : 
+                                     ((activeModalShowcaseId === 'purple' || activeModalShowcaseId === 'amethyst') ? 92 : 89);
                     const finalScore = Math.min((modalIsAiOptimized ? 98 : baseScore) + fluctuation, 100);
                     
                     // Direct quick update to avoid full animated ticks during every keypress
@@ -954,57 +973,114 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Bind cards click to open Customizer overlay modal
     clickableShowcaseCards.forEach(card => {
-        card.addEventListener('click', () => {
+        card.addEventListener('click', (e) => {
             const showcaseId = card.getAttribute('data-showcase-id');
+            
+            // Protected Action check: require login
+            if (!isLoggedIn && showcaseId !== 'github-contribution') {
+                e.preventDefault();
+                e.stopPropagation();
+                authModal.classList.add('active');
+                switchAuthTab('tab-login');
+                document.body.style.overflow = 'hidden';
+                showToast("🔒 Protected Action: Please log in or sign up to customize this premium resume template.");
+                return;
+            }
+
+            // Special GitHub Contribution Card Override
+            if (showcaseId === 'github-contribution') {
+                e.preventDefault();
+                e.stopPropagation();
+                showToast("✨ Forking CVPilot repository on GitHub to add a new community template... 🚀");
+                setTimeout(() => {
+                    window.open("https://github.com/Shivam-Dhoundiyal/CVPilot", "_blank");
+                }, 1200);
+                return;
+            }
+
             activeModalShowcaseId = showcaseId;
             modalIsAiOptimized = false;
             
-            // Get original mini CV inside the card
-            const innerCv = card.querySelector('.showcase-inner-cv');
-            if (!innerCv) return;
+            // Check if there is a cloud-saved resume for this template in the array
+            const savedResume = window.userResumes ? window.userResumes.find(r => r.selectedTemplate === showcaseId) : null;
             
-            // Clone and prepare high fidelity elements
-            const clonedCv = innerCv.cloneNode(true);
-            clonedCv.removeAttribute('style'); // Clear specific thumbnail bounds style
-            
-            // Clean previous overrides
-            modalCvCanvas.innerHTML = '';
-            modalCvCanvas.appendChild(clonedCv);
-            modalCvCanvas.style.backgroundColor = '';
-            
-            // Default styling presets
-            modalCvCanvas.className = "studio-interactive-cv-paper";
-            
-            modalFontPicker.querySelectorAll('.font-picker-btn').forEach(btn => btn.classList.remove('active'));
-            if (showcaseId === 'minimalist') {
-                modalFontPicker.querySelector('[data-font="serif"]').classList.add('active');
-                modalCvCanvas.classList.add('font-serif');
+            if (savedResume && savedResume.canvasHtml) {
+                // Restore customized canvas HTML
+                modalCvCanvas.innerHTML = savedResume.canvasHtml;
+                modalCvCanvas.style.backgroundColor = '';
+                modalCvCanvas.className = "studio-interactive-cv-paper";
+                
+                // Re-enable contenteditable
+                makeCanvasElementsEditable();
+                
+                // Restore font active picker state
+                modalFontPicker.querySelectorAll('.font-picker-btn').forEach(btn => btn.classList.remove('active'));
+                if (savedResume.canvasHtml.includes('font-serif')) {
+                    modalFontPicker.querySelector('[data-font="serif"]').classList.add('active');
+                    modalCvCanvas.classList.add('font-serif');
+                } else if (savedResume.canvasHtml.includes('font-mono')) {
+                    modalFontPicker.querySelector('[data-font="mono"]').classList.add('active');
+                    modalCvCanvas.classList.add('font-mono');
+                } else {
+                    modalFontPicker.querySelector('[data-font="sans"]').classList.add('active');
+                    modalCvCanvas.classList.add('font-sans');
+                }
+                
+                // Display Modal overlay
+                studioModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                
+                // Restore ATS score
+                setTimeout(() => {
+                    updateModalAtsScore(savedResume.atsScore || 92);
+                }, 350);
+                
+                showToast(`☁️ Cloud Restore: Loaded your saved custom "${savedResume.resumeTitle}" layout.`);
             } else {
-                modalFontPicker.querySelector('[data-font="sans"]').classList.add('active');
-                modalCvCanvas.classList.add('font-sans');
+                // Get original mini CV inside the card
+                const innerCv = card.querySelector('.showcase-inner-cv');
+                if (!innerCv) return;
+                
+                // Clone and prepare high fidelity elements
+                const clonedCv = innerCv.cloneNode(true);
+                clonedCv.removeAttribute('style'); // Clear specific thumbnail bounds style
+                
+                // Clean previous overrides
+                modalCvCanvas.innerHTML = '';
+                modalCvCanvas.appendChild(clonedCv);
+                modalCvCanvas.style.backgroundColor = '';
+                
+                // Default styling presets
+                modalCvCanvas.className = "studio-interactive-cv-paper";
+                
+                modalFontPicker.querySelectorAll('.font-picker-btn').forEach(btn => btn.classList.remove('active'));
+                if (showcaseId === 'minimalist' || showcaseId === 'saffron') {
+                    modalFontPicker.querySelector('[data-font="serif"]').classList.add('active');
+                    modalCvCanvas.classList.add('font-serif');
+                } else {
+                    modalFontPicker.querySelector('[data-font="sans"]').classList.add('active');
+                    modalCvCanvas.classList.add('font-sans');
+                }
+                
+                // Activate contenteditable tags
+                makeCanvasElementsEditable();
+                
+                // Display Modal overlay
+                studioModal.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Stop standard page scroll
+                
+                // Initial score check animation
+                let initialScore = 92;
+                if (showcaseId === 'slate' || showcaseId === 'emerald') initialScore = 95;
+                if (showcaseId === 'purple' || showcaseId === 'amethyst') initialScore = 92;
+                if (showcaseId === 'minimalist' || showcaseId === 'saffron') initialScore = 89;
+                
+                setTimeout(() => {
+                    updateModalAtsScore(initialScore);
+                }, 350);
+                
+                showToast(`✨ Opened Template Editor Studio: "${card.querySelector('.showcase-title').textContent}" layout loaded.`);
             }
-            
-            // Activate contenteditable tags
-            makeCanvasElementsEditable();
-            
-            // Render colors options
-            renderPaletteButtons(showcaseId);
-            
-            // Display Modal overlay
-            studioModal.classList.add('active');
-            document.body.style.overflow = 'hidden'; // Stop standard page scroll
-            
-            // Initial score check animation
-            let initialScore = 92;
-            if (showcaseId === 'slate') initialScore = 95;
-            if (showcaseId === 'purple') initialScore = 92;
-            if (showcaseId === 'minimalist') initialScore = 89;
-            
-            setTimeout(() => {
-                updateModalAtsScore(initialScore);
-            }, 350);
-            
-            showToast(`✨ Opened Template Editor Studio: "${card.querySelector('.showcase-title').textContent}" layout loaded.`);
         });
     });
 
@@ -1350,6 +1426,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 performLogout();
             });
         }
+
+        // Dropdown actions: my resumes list
+        const myResumesBtn = document.getElementById('btn-dropdown-my-resumes');
+        if (myResumesBtn) {
+            myResumesBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                badge.classList.remove('active');
+                
+                if (!window.userResumes || window.userResumes.length === 0) {
+                    showToast("💼 Workspace Empty: You haven't saved any resumes to the cloud yet.");
+                } else {
+                    const listText = window.userResumes.map((r, i) => `${i + 1}. ${r.resumeTitle} (${r.selectedTemplate.toUpperCase()} - ATS Score: ${r.atsScore}%)`).join('\n');
+                    alert(`💼 YOUR SAVED CLOUD RESUMES:\n\n${listText}\n\nSimply click the corresponding template card in the showcase grid to view or resume editing!`);
+                }
+            });
+            // Update the count dynamically
+            updateMyResumesCountUI();
+        }
     }
 
     // Switch Header markup based on logged state
@@ -1357,8 +1451,15 @@ document.addEventListener('DOMContentLoaded', () => {
         loggedInUser.name = name;
         isLoggedIn = true;
         
-        // Save to browser persistence database
-        localStorage.setItem('cvpilot_session', JSON.stringify({ name: name }));
+        // Save to browser persistence database safely without destroying fields
+        const savedSession = localStorage.getItem('cvpilot_session');
+        const existing = savedSession ? JSON.parse(savedSession) : {};
+        localStorage.setItem('cvpilot_session', JSON.stringify({
+            ...existing,
+            uid: loggedInUser.uid || existing.uid || loggedInUser.email || existing.email || name,
+            name: name,
+            email: loggedInUser.email || existing.email || ""
+        }));
         
         // Split initials
         const parts = name.split(/\s+/);
@@ -1377,8 +1478,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         <h6>${name}</h6>
                         <p>Executive Plan Member</p>
                     </div>
-                    <button class="dropdown-item-btn" type="button" onclick="showToast('💼 Loaded my saved CV folders (3).')">
-                        💼 My Resumes (3)
+                    <button class="dropdown-item-btn" type="button" id="btn-dropdown-my-resumes">
+                        💼 My Resumes (0)
                     </button>
                     <button class="dropdown-item-btn" type="button" onclick="showToast('⚙️ Settings panel loaded.')">
                         ⚙️ Account Settings
@@ -1395,9 +1496,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Switch Header markup back to guest
-    function performLogout() {
+    function performLogout(silent = false) {
         isLoggedIn = false;
         loggedInUser = { name: "", email: "" };
+        window.userResumes = []; // Clear resumes in memory
         
         // Clear local storage persistence
         localStorage.removeItem('cvpilot_session');
@@ -1435,40 +1537,76 @@ document.addEventListener('DOMContentLoaded', () => {
             showToast("✦ Welcome! Sign up form opened.");
         });
         
-        showToast("🚪 Successfully logged out of CVPilot workspace.");
+        if (!silent) {
+            showToast("🚪 Successfully logged out of CVPilot workspace.");
+        }
     }
 
     // Handle Login Submit
     loginForm.addEventListener('submit', (e) => {
         e.preventDefault();
         const email = document.getElementById('login-email').value.trim();
+        const password = document.getElementById('login-password').value;
         const btnSubmit = document.getElementById('btn-login-submit');
         
         btnSubmit.disabled = true;
         btnSubmit.innerHTML = `Validating Credentials...`;
         
-        // Simple mock login profile extraction
-        const parsedName = email.split('@')[0];
-        const formattedName = parsedName.charAt(0).toUpperCase() + parsedName.slice(1);
-        const nameToUse = formattedName === 'Shivam-dhoundiyal' ? 'Shivam Dhoundiyal' : (formattedName === 'James' ? 'James Anderson' : formattedName);
-        
-        setTimeout(() => {
-            btnSubmit.innerHTML = `Unlocking Workspace...`;
+        if (window.CVPilotFirebaseAuth && window.CVPilotFirebaseAuth.isConfigured) {
+            window.CVPilotFirebaseAuth.signInWithEmail(email, password)
+                .then(user => {
+                    const nameToUse = user.displayName || email.split('@')[0];
+                    authSuccessMessage.textContent = `Welcome back, ${nameToUse}! Provisioning personalized sandbox canvas...`;
+                    authSuccessOverlay.classList.add('active');
+                    
+                    setTimeout(() => {
+                        isLoggedIn = true;
+                        loggedInUser = { name: nameToUse, email: email };
+                        localStorage.setItem('cvpilot_session', JSON.stringify({ name: nameToUse, email: email, provider: 'Firebase' }));
+                        applyLoggedInHeader(nameToUse);
+                        closeAuthModal();
+                        showToast(`✨ Welcome back, ${nameToUse}! Account unlocked successfully.`);
+                    }, 1900);
+                })
+                .catch(error => {
+                    console.error('Firebase sign-in error:', error);
+                    let errMsg = error.message || 'Verification failed.';
+                    if (error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found' || error.code === 'auth/invalid-credential') {
+                        errMsg = 'Incorrect email or password. Please verify your credentials.';
+                    } else if (error.code === 'auth/invalid-email') {
+                        errMsg = 'Please enter a valid email address.';
+                    }
+                    showToast(`⚠️ Sign-in Failed: ${errMsg}`);
+                    btnSubmit.disabled = false;
+                    btnSubmit.innerHTML = `Sign In to My Dashboard`;
+                });
+        } else {
+            // Simple mock login profile extraction
+            const parsedName = email.split('@')[0];
+            const formattedName = parsedName.charAt(0).toUpperCase() + parsedName.slice(1);
+            const nameToUse = formattedName === 'Shivam-dhoundiyal' ? 'Shivam Dhoundiyal' : (formattedName === 'James' ? 'James Anderson' : formattedName);
             
             setTimeout(() => {
-                // Show celebration overlay screen
-                authSuccessMessage.textContent = `Welcome back, ${nameToUse}! Provisioning personalized sandbox canvas...`;
-                authSuccessOverlay.classList.add('active');
+                btnSubmit.innerHTML = `Unlocking Workspace...`;
                 
                 setTimeout(() => {
-                    applyLoggedInHeader(nameToUse);
-                    closeAuthModal();
-                    showToast(`✨ Welcome back, ${nameToUse}! Account unlocked successfully.`);
-                }, 1900);
+                    // Show celebration overlay screen
+                    authSuccessMessage.textContent = `Welcome back, ${nameToUse}! Provisioning personalized sandbox canvas...`;
+                    authSuccessOverlay.classList.add('active');
+                    
+                    setTimeout(() => {
+                        isLoggedIn = true;
+                        loggedInUser = { name: nameToUse, email: email };
+                        localStorage.setItem('cvpilot_session', JSON.stringify({ name: nameToUse, email: email, provider: 'Mock' }));
+                        applyLoggedInHeader(nameToUse);
+                        closeAuthModal();
+                        showToast(`✨ Welcome back, ${nameToUse}! Account unlocked successfully.`);
+                    }, 1900);
+                    
+                }, 600);
                 
-            }, 600);
-            
-        }, 1000);
+            }, 1000);
+        }
     });
 
     // Handle Sign Up Submit
@@ -1476,34 +1614,80 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         const name = document.getElementById('signup-name').value.trim();
         const email = document.getElementById('signup-email').value.trim();
+        const password = document.getElementById('signup-password').value;
         const btnSubmit = document.getElementById('btn-signup-submit');
+        const termsAccepted = document.getElementById('signup-terms').checked;
+        
+        if (!termsAccepted) {
+            showToast("⚠️ You must agree to the Terms of Service.");
+            return;
+        }
         
         btnSubmit.disabled = true;
         btnSubmit.innerHTML = `Creating Secure Workspace...`;
         
-        setTimeout(() => {
-            btnSubmit.innerHTML = `Caching templates...`;
-            
+        if (window.CVPilotFirebaseAuth && window.CVPilotFirebaseAuth.isConfigured) {
+            window.CVPilotFirebaseAuth.signUpWithEmail(email, password, name)
+                .then(user => {
+                    authSuccessMessage.textContent = `Welcome, ${name}! Your Premium Sandbox Workspace has been successfully activated.`;
+                    authSuccessOverlay.classList.add('active');
+                    
+                    setTimeout(() => {
+                        isLoggedIn = true;
+                        loggedInUser = { name: name, email: email };
+                        localStorage.setItem('cvpilot_session', JSON.stringify({ name: name, email: email, provider: 'Firebase' }));
+                        applyLoggedInHeader(name);
+                        closeAuthModal();
+                        showToast(`🏆 Welcome to CVPilot, ${name}! Premium templates are fully unlocked.`);
+                        
+                        setTimeout(() => {
+                            showToast(`✉️ Welcome Dispatch: A welcoming setup guide has been sent to your inbox at ${email}!`);
+                        }, 2800);
+                    }, 1900);
+                })
+                .catch(error => {
+                    console.error('Firebase sign-up error:', error);
+                    let errMsg = error.message || 'Registration failed.';
+                    if (error.code === 'auth/email-already-in-use') {
+                        errMsg = 'This email address is already registered. Please log in instead.';
+                    } else if (error.code === 'auth/weak-password') {
+                        errMsg = 'Password is too weak. It must be at least 6 characters.';
+                    } else if (error.code === 'auth/invalid-email') {
+                        errMsg = 'Please enter a valid email address.';
+                    }
+                    showToast(`⚠️ Sign-up Failed: ${errMsg}`);
+                    btnSubmit.disabled = false;
+                    btnSubmit.innerHTML = `Create Free Workspace`;
+                });
+        } else {
+            // Simulated mock fallback
             setTimeout(() => {
-                // Show celebration overlay screen
-                authSuccessMessage.textContent = `Welcome, ${name}! Your Premium Sandbox Workspace has been successfully activated.`;
-                authSuccessOverlay.classList.add('active');
+                btnSubmit.innerHTML = `Caching templates...`;
                 
                 setTimeout(() => {
-                    applyLoggedInHeader(name);
-                    closeAuthModal();
-                    showToast(`🏆 Welcome to CVPilot, ${name}! Premium templates are fully unlocked.`);
+                    // Show celebration overlay screen
+                    authSuccessMessage.textContent = `Welcome, ${name}! Your Premium Sandbox Workspace has been successfully activated.`;
+                    authSuccessOverlay.classList.add('active');
                     
-                    // Trigger mock verification welcome email dispatch notification
                     setTimeout(() => {
-                        showToast(`✉️ Welcome Dispatch: A welcoming setup guide has been sent to your inbox at ${email}!`);
-                    }, 2800);
+                        isLoggedIn = true;
+                        loggedInUser = { name: name, email: email };
+                        localStorage.setItem('cvpilot_session', JSON.stringify({ name: name, email: email, provider: 'Mock' }));
+                        applyLoggedInHeader(name);
+                        closeAuthModal();
+                        showToast(`🏆 Welcome to CVPilot, ${name}! Premium templates are fully unlocked.`);
+                        
+                        // Trigger mock verification welcome email dispatch notification
+                        setTimeout(() => {
+                            showToast(`✉️ Welcome Dispatch: A welcoming setup guide has been sent to your inbox at ${email}!`);
+                        }, 2800);
+                        
+                    }, 1900);
                     
-                }, 1900);
+                }, 600);
                 
-            }, 600);
-            
-        }, 1000);
+            }, 1000);
+        }
     });
 
     // =============================================================
@@ -1739,6 +1923,15 @@ Microsoft Office, Communication, Teamwork, Social Media, Google Docs`;
         btnTriggerReshape.addEventListener('click', () => {
             if (btnTriggerReshape.classList.contains('disabled')) return;
             
+            // Protected Action check: require login
+            if (!isLoggedIn) {
+                authModal.classList.add('active');
+                switchAuthTab('tab-login');
+                document.body.style.overflow = 'hidden';
+                showToast("🔒 Protected Action: Please log in or sign up to run the AI Reshaper pipeline.");
+                return;
+            }
+            
             // Activate Modal
             if (reshaperModal && parsedRawCvEditor) {
                 reshaperModal.classList.add('active');
@@ -1931,8 +2124,17 @@ Microsoft Office, Communication, Teamwork, Social Media, Google Docs`;
         if (savedSession) {
             try {
                 const sessionData = JSON.parse(savedSession);
+                isLoggedIn = true;
+                loggedInUser = {
+                    uid: sessionData.uid || sessionData.email || "",
+                    name: sessionData.name,
+                    email: sessionData.email || ""
+                };
                 applyLoggedInHeader(sessionData.name);
                 showToast(`✨ Welcome back, ${sessionData.name}! Workspace session auto-restored.`);
+                
+                // Fetch resumes on boot session restorer
+                fetchUserResumes();
             } catch (err) {
                 localStorage.removeItem('cvpilot_session');
             }
@@ -1946,5 +2148,262 @@ Microsoft Office, Communication, Teamwork, Social Media, Google Docs`;
     
     // Run auto-login restoration scan
     checkExistingSession();
+
+    // -------------------------------------------------------------
+    // NEW: HIGH-FIDELITY SHOWCASE SEARCH & FILTERING SYSTEM
+    // -------------------------------------------------------------
+    const searchInput = document.getElementById('showcase-search-input');
+    const clearSearchBtn = document.getElementById('clear-search-btn');
+    const filterTabs = document.querySelectorAll('#showcase-filter-tabs .filter-tab');
+    const showcaseItems = document.querySelectorAll('#showcase-templates-grid .showcase-item');
+
+    let currentFilter = 'all';
+    let searchQuery = '';
+
+    const filterTemplates = () => {
+        showcaseItems.forEach(item => {
+            const categories = JSON.parse(item.getAttribute('data-categories') || '[]');
+            
+            // Check if matches selected tab category
+            const matchesCategory = currentFilter === 'all' || categories.includes(currentFilter);
+            
+            // Search text content matches
+            const titleText = (item.querySelector('.showcase-title')?.textContent || '').toLowerCase();
+            const tagText = (item.querySelector('.showcase-tag')?.textContent || '').toLowerCase();
+            const cvName = (item.querySelector('.mini-cv-name')?.textContent || '').toLowerCase();
+            const cvTitle = (item.querySelector('.mini-cv-title')?.textContent || '').toLowerCase();
+            
+            // Collect tags text
+            const skillTags = Array.from(item.querySelectorAll('.mini-cv-tag'))
+                .map(t => t.textContent.toLowerCase())
+                .join(' ');
+            
+            const itemText = `${titleText} ${tagText} ${cvName} ${cvTitle} ${skillTags}`;
+            const matchesSearch = searchQuery === '' || itemText.includes(searchQuery);
+
+            if (matchesCategory && matchesSearch) {
+                item.classList.remove('hidden-card');
+            } else {
+                item.classList.add('hidden-card');
+            }
+        });
+    };
+
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            searchQuery = e.target.value.toLowerCase().trim();
+            
+            // Toggle clear button visibility
+            if (searchQuery.length > 0) {
+                clearSearchBtn.style.display = 'flex';
+            } else {
+                clearSearchBtn.style.display = 'none';
+            }
+            
+            filterTemplates();
+        });
+    }
+
+    if (clearSearchBtn) {
+        clearSearchBtn.addEventListener('click', () => {
+            searchInput.value = '';
+            searchQuery = '';
+            clearSearchBtn.style.display = 'none';
+            filterTemplates();
+            searchInput.focus();
+            showToast("🔍 Cleared template search filters.");
+        });
+    }
+
+    filterTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            filterTabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            
+            currentFilter = tab.getAttribute('data-filter');
+            filterTemplates();
+            
+            showToast(`📂 Showing templates filtered by: "${tab.textContent}"`);
+        });
+    });
+
+    // -------------------------------------------------------------
+    // CLOUD DATABASE INTEGRATION: SAVE, LOAD, AND CACHE RESUMES
+    // -------------------------------------------------------------
+    window.userResumes = [];
+
+    function fetchUserResumes() {
+        if (!isLoggedIn || !loggedInUser) return;
+        const userId = loggedInUser.uid || loggedInUser.email;
+        
+        if (window.CVPilotFirebaseDB && window.CVPilotFirebaseDB.isConfigured) {
+            window.CVPilotFirebaseDB.getUserResumes(userId)
+                .then(resumes => {
+                    window.userResumes = resumes;
+                    updateMyResumesCountUI();
+                    console.log("💼 Firebase Firestore Resumes Synced:", resumes.length);
+                })
+                .catch(err => {
+                    console.error("Firebase Firestore Resume Load Error:", err);
+                    showToast("⚠️ Cloud Sync Error: Unable to fetch your resumes from Firestore.");
+                });
+        } else {
+            // Simulated local storage fallback
+            try {
+                const localStore = localStorage.getItem('cvpilot_cloud_resumes');
+                if (localStore) {
+                    const allResumes = JSON.parse(localStore);
+                    window.userResumes = allResumes.filter(r => r.ownerId === userId);
+                } else {
+                    window.userResumes = [];
+                }
+                updateMyResumesCountUI();
+                console.log("💼 Mock Local Storage Resumes Synced:", window.userResumes.length);
+            } catch (err) {
+                console.error("Local storage mock sync error:", err);
+            }
+        }
+    }
+
+    function updateMyResumesCountUI() {
+        const btnMyResumes = document.getElementById('btn-dropdown-my-resumes');
+        if (btnMyResumes) {
+            btnMyResumes.innerHTML = `💼 My Resumes (${window.userResumes.length})`;
+        }
+    }
+
+    // Bind Cloud Save Button Click Listener
+    const saveCloudBtn = document.getElementById('modal-btn-save-cloud');
+    if (saveCloudBtn) {
+        saveCloudBtn.addEventListener('click', () => {
+            if (!isLoggedIn || !loggedInUser) {
+                authModal.classList.add('active');
+                switchAuthTab('tab-login');
+                document.body.style.overflow = 'hidden';
+                showToast("🔒 Protected Action: Please log in or sign up to save your resume to the cloud.");
+                return;
+            }
+            
+            saveCloudBtn.disabled = true;
+            const originalText = saveCloudBtn.innerHTML;
+            saveCloudBtn.innerHTML = `
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width: 14px; height: 14px; margin-right: 8px; display: inline-block; vertical-align: -1.5px; animation: spin-loader 0.8s infinite linear;"><line x1="12" y1="2" x2="12" y2="6"></line><line x1="12" y1="18" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line></svg>
+                Syncing to Cloud...
+            `;
+            
+            const nameNode = modalCvCanvas.querySelector('.mini-cv-name');
+            const titleNode = modalCvCanvas.querySelector('.mini-cv-title');
+            const summaryNode = modalCvCanvas.querySelector('.mini-cv-summary') || modalCvCanvas.querySelector('p');
+            
+            const nameText = nameNode ? nameNode.textContent.trim() : "James Anderson";
+            const titleText = titleNode ? titleNode.textContent.trim() : "Marketing Manager";
+            const summaryText = summaryNode ? summaryNode.textContent.trim() : "";
+            
+            const userId = loggedInUser.uid || loggedInUser.email;
+            const resumeId = `${userId}_${activeModalShowcaseId}`;
+            const resumeTitle = `${nameText}'s Custom ${activeModalShowcaseId.charAt(0).toUpperCase() + activeModalShowcaseId.slice(1)} CV`;
+            
+            // Extract core details for model layout compatibility
+            const educationList = Array.from(modalCvCanvas.querySelectorAll('.mini-cv-education, .education-item')).map(e => e.textContent.trim());
+            const experienceList = Array.from(modalCvCanvas.querySelectorAll('.mini-cv-experience, .experience-item')).map(e => e.textContent.trim());
+            const skillTags = Array.from(modalCvCanvas.querySelectorAll('.mini-cv-tag')).map(t => t.textContent.trim());
+            const projectList = Array.from(modalCvCanvas.querySelectorAll('.mini-cv-project, .project-item')).map(p => p.textContent.trim());
+            
+            const resumeData = {
+                ownerId: userId,
+                resumeTitle: resumeTitle,
+                selectedTemplate: activeModalShowcaseId,
+                atsScore: modalAtsScore || 92,
+                canvasHtml: modalCvCanvas.innerHTML,
+                personalInfo: {
+                    name: nameText,
+                    title: titleText
+                },
+                summary: summaryText,
+                education: educationList,
+                experience: experienceList,
+                skills: skillTags,
+                projects: projectList,
+                createdAt: new Date().toISOString()
+            };
+            
+            if (window.CVPilotFirebaseDB && window.CVPilotFirebaseDB.isConfigured) {
+                window.CVPilotFirebaseDB.saveResume(resumeId, resumeData)
+                    .then(() => {
+                        showToast(`💾 Cloud Success: "${resumeTitle}" securely saved to Firestore!`);
+                        fetchUserResumes();
+                    })
+                    .catch(err => {
+                        console.error("Firestore Resume Save Error:", err);
+                        showToast("⚠️ Cloud Save Failed: Unable to synchronize with Firestore.");
+                    })
+                    .finally(() => {
+                        saveCloudBtn.disabled = false;
+                        saveCloudBtn.innerHTML = originalText;
+                    });
+            } else {
+                // Simulated fallback save
+                setTimeout(() => {
+                    try {
+                        const localStore = localStorage.getItem('cvpilot_cloud_resumes');
+                        const allResumes = localStore ? JSON.parse(localStore) : [];
+                        
+                        const idx = allResumes.findIndex(r => r.id === resumeId || (r.ownerId === userId && r.selectedTemplate === activeModalShowcaseId));
+                        if (idx >= 0) {
+                            allResumes[idx] = { id: resumeId, ...resumeData, updatedAt: new Date().toISOString() };
+                        } else {
+                            allResumes.push({ id: resumeId, ...resumeData, updatedAt: new Date().toISOString() });
+                        }
+                        
+                        localStorage.setItem('cvpilot_cloud_resumes', JSON.stringify(allResumes));
+                        showToast(`💾 Local Storage Sync: "${resumeTitle}" saved to simulated cloud database!`);
+                        fetchUserResumes();
+                    } catch (err) {
+                        console.error("Local Storage Save Error:", err);
+                        showToast("⚠️ Save Failed: Local persistence failure.");
+                    } finally {
+                        saveCloudBtn.disabled = false;
+                        saveCloudBtn.innerHTML = originalText;
+                    }
+                }, 1000);
+            }
+        });
+    }
+
+    // -------------------------------------------------------------
+    // NEW: FIREBASE AUTHENTICATION UI INTERFACE BRIDGE
+    // -------------------------------------------------------------
+    window.CVPilotAuthUI = {
+        showToast: (message) => {
+            showToast(message);
+        },
+        renderSignedIn: (userData) => {
+            isLoggedIn = true;
+            loggedInUser = {
+                uid: userData.uid || userData.email,
+                name: userData.name,
+                email: userData.email
+            };
+            if (userData.persistLocal) {
+                localStorage.setItem('cvpilot_session', JSON.stringify({ uid: loggedInUser.uid, name: userData.name, email: userData.email, provider: userData.provider || 'Firebase' }));
+            }
+            applyLoggedInHeader(userData.name);
+            closeAuthModal();
+            showToast(`✨ Account Sync: Welcome back, ${userData.name}! Dashboard fully active.`);
+            
+            // Sync user saved resumes
+            fetchUserResumes();
+        },
+        renderSignedOut: (options = {}) => {
+            isLoggedIn = false;
+            loggedInUser = { name: "", email: "" };
+            window.userResumes = []; // clear cache
+            localStorage.removeItem('cvpilot_session');
+            performLogout(options.silent);
+        }
+    };
+
+    // Dispatch the ready event to let firebase-auth.js unblock wait promise
+    window.dispatchEvent(new CustomEvent('cvpilot:auth-ui-ready'));
 });
 

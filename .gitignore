@@ -24,3 +24,10 @@ yarn-debug.log*
 yarn-error.log*
 logs/
 *.log
+
+# Dependencies & Build artifacts
+node_modules/
+dist/
+.gemini/
+.env*
+!.env.example
