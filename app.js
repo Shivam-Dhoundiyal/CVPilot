@@ -1309,6 +1309,7 @@ document.addEventListener('DOMContentLoaded', () => {
         loginForm.reset();
         signupForm.reset();
         resetPasswordStrength();
+        resetAuthSubmitButtons();
     };
 
     closeAuthBtn.addEventListener('click', closeAuthModal);
@@ -1349,6 +1350,21 @@ document.addEventListener('DOMContentLoaded', () => {
         if (label) {
             label.textContent = "Password is empty";
             label.style.color = "var(--slate-500)";
+        }
+    }
+
+    function resetAuthSubmitButtons() {
+        const loginSubmit = document.getElementById('btn-login-submit');
+        const signupSubmit = document.getElementById('btn-signup-submit');
+
+        if (loginSubmit) {
+            loginSubmit.disabled = false;
+            loginSubmit.innerHTML = 'Sign In to My Dashboard';
+        }
+
+        if (signupSubmit) {
+            signupSubmit.disabled = false;
+            signupSubmit.innerHTML = 'Create Free Workspace';
         }
     }
 
@@ -1496,7 +1512,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Switch Header markup back to guest
-    function performLogout(silent = false) {
+    function performLogout(silent = false, options = {}) {
+        const shouldSignOutFirebase = !options.skipFirebase;
         isLoggedIn = false;
         loggedInUser = { name: "", email: "" };
         window.userResumes = []; // Clear resumes in memory
@@ -1505,7 +1522,7 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.removeItem('cvpilot_session');
         
         // Sign out of Firebase Auth if active
-        if (window.firebaseAuth) {
+        if (shouldSignOutFirebase && window.firebaseAuth) {
             window.firebaseAuth.signOut().then(() => {
                 console.log("🔥 Firebase User session signed out successfully.");
             }).catch(err => {
@@ -1575,6 +1592,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         errMsg = 'Incorrect email or password. Please verify your credentials.';
                     } else if (error.code === 'auth/invalid-email') {
                         errMsg = 'Please enter a valid email address.';
+                    } else if (error.code === 'auth/too-many-requests') {
+                        errMsg = 'Too many failed attempts. Wait a moment and try again.';
+                    } else if (error.code === 'auth/user-disabled') {
+                        errMsg = 'This account has been disabled.';
+                    } else if (error.code === 'auth/network-request-failed') {
+                        errMsg = 'Network error. Check your connection and try again.';
                     }
                     showToast(`⚠️ Sign-in Failed: ${errMsg}`);
                     btnSubmit.disabled = false;
@@ -1654,6 +1677,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         errMsg = 'Password is too weak. It must be at least 6 characters.';
                     } else if (error.code === 'auth/invalid-email') {
                         errMsg = 'Please enter a valid email address.';
+                    } else if (error.code === 'auth/operation-not-allowed') {
+                        errMsg = 'Email/password sign-up is not enabled in Firebase Authentication.';
+                    } else if (error.code === 'auth/network-request-failed') {
+                        errMsg = 'Network error. Check your connection and try again.';
                     }
                     showToast(`⚠️ Sign-up Failed: ${errMsg}`);
                     btnSubmit.disabled = false;
@@ -2399,11 +2426,10 @@ Microsoft Office, Communication, Teamwork, Social Media, Google Docs`;
             loggedInUser = { name: "", email: "" };
             window.userResumes = []; // clear cache
             localStorage.removeItem('cvpilot_session');
-            performLogout(options.silent);
+            performLogout(options.silent, { skipFirebase: options.skipFirebase });
         }
     };
 
     // Dispatch the ready event to let firebase-auth.js unblock wait promise
     window.dispatchEvent(new CustomEvent('cvpilot:auth-ui-ready'));
 });
-

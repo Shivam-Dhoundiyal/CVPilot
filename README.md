@@ -1,10 +1,14 @@
 # CVPilot
 
-CVPilot is a static HTML/CSS/JS web app with Firebase Google Sign-In support.
+CVPilot is a static HTML/CSS/JS web app with Firebase email/password, Google, and GitHub Sign-In support.
 
-## Firebase Google Sign-In setup
+## Firebase Auth setup
 
-Create a Firebase project, add a Web App, and enable **Authentication → Sign-in method → Google**.
+Create a Firebase project, add a Web App, and enable these providers in **Authentication → Sign-in method**:
+
+- Email/Password
+- Google
+- GitHub
 
 Add these authorized domains in Firebase Authentication settings:
 

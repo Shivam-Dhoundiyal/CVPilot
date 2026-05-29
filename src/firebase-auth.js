@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import {
     getAuth,
+    GithubAuthProvider,
     GoogleAuthProvider,
     onAuthStateChanged,
     signInWithPopup,
@@ -32,7 +33,7 @@ const hasFirebaseConfig =
     Object.values(firebaseConfig).every(Boolean) && 
     !Object.values(firebaseConfig).some(val => val.includes('your_firebase') || val.includes('your-project-id'));
 
-const googleButtonSelector = '[data-auth-provider="google"]';
+const socialAuthButtonSelector = '[data-auth-provider]';
 
 function notify(message) {
     if (window.CVPilotAuthUI?.showToast) {
@@ -53,11 +54,60 @@ function waitForAuthUi() {
     });
 }
 
-function setGoogleButtonsLoading(isLoading) {
-    document.querySelectorAll(googleButtonSelector).forEach((button) => {
+function setSocialButtonsLoading(activeButton, isLoading, providerName = 'account') {
+    document.querySelectorAll(socialAuthButtonSelector).forEach((button) => {
         button.disabled = isLoading;
-        button.dataset.originalLabel ??= button.innerHTML;
-        button.innerHTML = isLoading ? 'Connecting to Google...' : button.dataset.originalLabel;
+    });
+
+    if (!activeButton) return;
+
+    activeButton.dataset.originalLabel ??= activeButton.innerHTML;
+    activeButton.innerHTML = isLoading
+        ? `Connecting to ${providerName}...`
+        : activeButton.dataset.originalLabel;
+
+    if (!isLoading) {
+        document.querySelectorAll(socialAuthButtonSelector).forEach((button) => {
+            button.disabled = false;
+        });
+    }
+}
+
+function getProvider(providerId) {
+    if (providerId === 'github') {
+        const provider = new GithubAuthProvider();
+        provider.addScope('read:user');
+        provider.addScope('user:email');
+        return {
+            label: 'GitHub',
+            provider
+        };
+    }
+
+    const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: 'select_account' });
+    return {
+        label: 'Google',
+        provider
+    };
+}
+
+function bindSocialAuthButtons(signInWithProvider) {
+    document.querySelectorAll(socialAuthButtonSelector).forEach((button) => {
+        button.addEventListener('click', async () => {
+            const providerId = button.dataset.authProvider || 'google';
+            const { label } = getProvider(providerId);
+
+            try {
+                setSocialButtonsLoading(button, true, label);
+                notify(`Connecting to ${label} secure sign-in...`);
+                await signInWithProvider(providerId);
+            } catch (error) {
+                notify(mapAuthError(error));
+            } finally {
+                setSocialButtonsLoading(button, false, label);
+            }
+        });
     });
 }
 
@@ -76,9 +126,15 @@ function mapAuthError(error) {
         case 'auth/invalid-credential':
             return 'Incorrect email or password. Please verify your credentials.';
         case 'auth/popup-closed-by-user':
-            return 'Google secure sign-in window was closed before completing.';
+            return 'The secure sign-in window was closed before completing.';
+        case 'auth/popup-blocked':
+            return 'The browser blocked the secure sign-in popup. Allow popups for this site and try again.';
         case 'auth/unauthorized-domain':
             return 'This domain is not authorized for Firebase Auth. Check your console.';
+        case 'auth/operation-not-allowed':
+            return 'This Firebase sign-in provider is not enabled yet.';
+        case 'auth/account-exists-with-different-credential':
+            return 'This email is already linked to another sign-in method. Use the original method first.';
         default:
             return error?.message || 'Authentication failed. Please try again.';
     }
@@ -102,9 +158,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     };
 
     if (!hasFirebaseConfig) {
-        document.querySelectorAll(googleButtonSelector).forEach((button) => {
+        document.querySelectorAll(socialAuthButtonSelector).forEach((button) => {
             button.addEventListener('click', () => {
-                notify('⚠️ Firebase is not configured yet. Add real credentials to your local .env file.');
+                notify('Firebase is not configured yet. Add Firebase web config values before using login.');
             });
         });
         return;
@@ -114,8 +170,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-        const provider = new GoogleAuthProvider();
-        provider.setCustomParameters({ prompt: 'select_account' });
+        const signInWithProvider = async (providerId) => {
+            const { provider } = getProvider(providerId);
+            return signInWithPopup(auth, provider);
+        };
 
         // Bind operational methods
         window.CVPilotFirebaseAuth = {
@@ -130,6 +188,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const userCredential = await signInWithEmailAndPassword(auth, email, password);
                 return userCredential.user;
             },
+            signInWithProvider,
             logout: () => signOut(auth)
         };
 
@@ -161,19 +220,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             signOut: () => signOut(auth)
         };
 
-        document.querySelectorAll(googleButtonSelector).forEach((button) => {
-            button.addEventListener('click', async () => {
-                try {
-                    setGoogleButtonsLoading(true);
-                    notify('⚡ Connecting to Google secure gateway...');
-                    await signInWithPopup(auth, provider);
-                } catch (error) {
-                    notify(`⚠️ ${mapAuthError(error)}`);
-                } finally {
-                    setGoogleButtonsLoading(false);
-                }
-            });
-        });
+        bindSocialAuthButtons(signInWithProvider);
 
         onAuthStateChanged(auth, (user) => {
             if (!user) {
