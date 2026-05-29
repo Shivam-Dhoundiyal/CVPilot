@@ -10,7 +10,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="styles.css">
+  <script type="module" crossorigin src="./assets/index-CVLPRYZW.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-Cp80RvpB.css">
 </head>
 <body>
     <!-- Background Decorative Glows -->
@@ -213,7 +214,7 @@
                             <p class="cv-title" id="cv-title-text">MARKETING MANAGER</p>
                         </div>
                         <div class="cv-photo-container">
-                            <img src="profile.png" alt="James Anderson Portrait" class="cv-photo" id="cv-profile-photo">
+                            <img src="./assets/profile-CEi7ZnFb.png" alt="James Anderson Portrait" class="cv-photo" id="cv-profile-photo">
                         </div>
                     </div>
 
@@ -584,9 +585,25 @@
                 <p class="section-subtitle">Pick from our curated portfolio. Fully optimized to secure higher callbacks across any industry vertical.</p>
             </div>
 
-            <div class="showcase-grid">
+            <!-- Interactive Search & Filtering Controls -->
+            <div class="showcase-controls">
+                <div class="showcase-search-wrapper">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="showcase-search-input" placeholder="Search templates by role, tag, or skill..." aria-label="Search resume templates">
+                    <button class="clear-search-btn" id="clear-search-btn" style="display: none;" title="Clear search">&times;</button>
+                </div>
+                <div class="showcase-filter-tabs" id="showcase-filter-tabs">
+                    <button class="filter-tab active" data-filter="all">All Designs</button>
+                    <button class="filter-tab" data-filter="professional">Professional</button>
+                    <button class="filter-tab" data-filter="creative">Creative</button>
+                    <button class="filter-tab" data-filter="executive">Executive</button>
+                    <button class="filter-tab" data-filter="github">Community</button>
+                </div>
+            </div>
+
+            <div class="showcase-grid" id="showcase-templates-grid">
                 <!-- Slate Theme -->
-                <div class="showcase-item clickable-template-card" data-showcase-id="slate" title="Click to customize Modern Slate in Studio">
+                <div class="showcase-item clickable-template-card" data-showcase-id="slate" data-categories='["all", "professional"]' title="Click to customize Modern Slate in Studio">
                     <div class="showcase-image-box slate-gradient">
                         <div class="showcase-hover-overlay">
                             <span class="overlay-sparkle">✦</span>
@@ -639,7 +656,7 @@
                 </div>
                 
                 <!-- Creative Purple Theme -->
-                <div class="showcase-item clickable-template-card" data-showcase-id="purple" title="Click to customize Creative Purple in Studio">
+                <div class="showcase-item clickable-template-card" data-showcase-id="purple" data-categories='["all", "creative"]' title="Click to customize Creative Purple in Studio">
                     <div class="showcase-image-box purple-gradient">
                         <div class="showcase-hover-overlay">
                             <span class="overlay-sparkle">✦</span>
@@ -649,25 +666,25 @@
                             <div class="showcase-cv-sidebar" style="background: #f5f3ff; height: 100%; border-right: 1px solid #ddd6fe; padding: 10px 4px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 6px;">
                                 <div style="width: 18px; height: 18px; border-radius: 50%; background: #8b5cf6; color: white; font-size: 5px; font-weight: 800; display: flex; align-items: center; justify-content: center; border: 1.5px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">JA</div>
                                 <div style="text-align: center; width: 100%;">
-                                    <div class="mini-cv-section-title" style="color: #6d28d9; border: none; font-size: 3.8px; margin-bottom: 2px;">Contact</div>
+                                    <div class="mini-cv-section-title" style="color: #8b5cf6; border: none; font-size: 3.8px; margin-bottom: 2px;">Contact</div>
                                     <div class="mini-cv-text" style="font-size: 3px; scale: 0.9;">✉️ james.a</div>
                                     <div class="mini-cv-text" style="font-size: 3px; scale: 0.9;">🌐 linkedin</div>
                                 </div>
                                 <div style="text-align: center; width: 100%;">
-                                    <div class="mini-cv-section-title" style="color: #6d28d9; border: none; font-size: 3.8px; margin-bottom: 2px;">Skills</div>
+                                    <div class="mini-cv-section-title" style="color: #8b5cf6; border: none; font-size: 3.8px; margin-bottom: 2px;">Skills</div>
                                     <span class="mini-cv-tag" style="font-size: 2.8px; background: #e0e7ff; color: #4338ca;">SEO</span>
                                     <span class="mini-cv-tag" style="font-size: 2.8px; background: #e0e7ff; color: #4338ca;">Analytics</span>
                                 </div>
                             </div>
                             <div style="padding: 10px 8px 10px 4px; display: flex; flex-direction: column; justify-content: flex-start; gap: 4px; overflow: hidden;">
-                                <div class="mini-cv-name" style="color: #6d28d9; font-size: 7.5px;">James Anderson</div>
+                                <div class="mini-cv-name" style="color: #8b5cf6; font-size: 7.5px;">James Anderson</div>
                                 <div class="mini-cv-title" style="color: var(--slate-600); font-size: 4.5px;">Marketing Manager</div>
                                 <div class="mini-cv-divider" style="margin: 1px 0 2px 0;"></div>
                                 
-                                <div class="mini-cv-section-title" style="color: #6d28d9; border-bottom: 1px solid #ddd6fe; margin-top: 1px;">Summary</div>
+                                <div class="mini-cv-section-title" style="color: #8b5cf6; border-bottom: 1px solid #ddd6fe; margin-top: 1px;">Summary</div>
                                 <p class="mini-cv-text" style="font-size: 3.2px; line-height: 1.25;">Results-driven marketer with 5+ years building campaigns.</p>
                                 
-                                <div class="mini-cv-section-title" style="color: #6d28d9; border-bottom: 1px solid #ddd6fe; margin-top: 1px;">Experience</div>
+                                <div class="mini-cv-section-title" style="color: #8b5cf6; border-bottom: 1px solid #ddd6fe; margin-top: 1px;">Experience</div>
                                 <div class="mini-cv-item">
                                     <div class="mini-cv-item-title" style="font-size: 3.8px;">Marketing Lead</div>
                                     <div class="mini-cv-item-company" style="font-size: 3.2px;">Tech Solutions • 2021-Pres</div>
@@ -685,7 +702,7 @@
                 </div>
 
                 <!-- Executive Minimalist Theme -->
-                <div class="showcase-item clickable-template-card" data-showcase-id="minimalist" title="Click to customize Executive Minimalist in Studio">
+                <div class="showcase-item clickable-template-card" data-showcase-id="minimalist" data-categories='["all", "executive"]' title="Click to customize Executive Minimalist in Studio">
                     <div class="showcase-image-box dark-gradient">
                         <div class="showcase-hover-overlay">
                             <span class="overlay-sparkle">✦</span>
@@ -723,6 +740,174 @@
                     <div class="showcase-meta">
                         <h4 class="showcase-title">Executive Minimalist</h4>
                         <span class="showcase-tag">Legal & Management</span>
+                    </div>
+                </div>
+
+                <!-- Emerald Modernist (New!) -->
+                <div class="showcase-item clickable-template-card" data-showcase-id="emerald" data-categories='["all", "professional"]' title="Click to customize Emerald Modernist in Studio">
+                    <div class="showcase-image-box emerald-gradient">
+                        <div class="showcase-hover-overlay">
+                            <span class="overlay-sparkle">✦</span>
+                            <span class="overlay-btn-text">Customize Style</span>
+                        </div>
+                        <div class="showcase-inner-cv header-blue" style="border-top-color: #10b981;">
+                            <div class="mini-cv-header">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <div class="mini-cv-name">Sophia Chen</div>
+                                        <div class="mini-cv-title">Lead Engineer</div>
+                                    </div>
+                                    <div style="width: 14px; height: 14px; border-radius: 50%; background: #10b981; color: white; font-size: 4.5px; font-weight: 800; display: flex; align-items: center; justify-content: center; transform: scale(1.2);">SC</div>
+                                </div>
+                                <div class="mini-cv-divider" style="background-color: #10b981;"></div>
+                            </div>
+                            <div class="mini-cv-flex" style="flex: 1;">
+                                <div class="mini-cv-col-main">
+                                    <div class="mini-cv-section-title" style="margin-top: 0; color: #10b981;">Experience</div>
+                                    <div class="mini-cv-item">
+                                        <div class="mini-cv-item-title">Staff Developer</div>
+                                        <div class="mini-cv-item-company">Stripe • 2022-Pres</div>
+                                        <ul class="mini-cv-bullets">
+                                            <li>Led API platform rewrite</li>
+                                            <li>Mentored 8 mid-level devs</li>
+                                        </ul>
+                                    </div>
+                                    <div class="mini-cv-item">
+                                        <div class="mini-cv-item-title">Fullstack Dev</div>
+                                        <div class="mini-cv-item-company">Fintech Inc • 2019-2022</div>
+                                    </div>
+                                </div>
+                                <div class="mini-cv-col-side">
+                                    <div class="mini-cv-section-title" style="margin-top: 0; color: #10b981;">Skills</div>
+                                    <div class="mini-cv-tag">React</div>
+                                    <div class="mini-cv-tag">Node.js</div>
+                                    <div class="mini-cv-tag">AWS</div>
+                                    <div class="mini-cv-tag">Rust</div>
+                                    <div class="mini-cv-section-title" style="color: #10b981;">Contact</div>
+                                    <div class="mini-cv-text">📞 +1 555 987-6543</div>
+                                    <div class="mini-cv-text">✉️ sophia.c@stripe.com</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="showcase-meta">
+                        <h4 class="showcase-title">Emerald Modernist</h4>
+                        <span class="showcase-tag">Tech & Finance</span>
+                    </div>
+                </div>
+
+                <!-- Amethyst Split (New!) -->
+                <div class="showcase-item clickable-template-card" data-showcase-id="amethyst" data-categories='["all", "creative"]' title="Click to customize Amethyst Split in Studio">
+                    <div class="showcase-image-box amethyst-gradient">
+                        <div class="showcase-hover-overlay">
+                            <span class="overlay-sparkle">✦</span>
+                            <span class="overlay-btn-text">Customize Style</span>
+                        </div>
+                        <div class="showcase-inner-cv layout-split" style="padding: 0;">
+                            <div class="showcase-cv-sidebar" style="background: #faf5ff; height: 100%; border-right: 1px solid #e9d5ff; padding: 10px 4px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 6px;">
+                                <div style="width: 18px; height: 18px; border-radius: 50%; background: #7c3aed; color: white; font-size: 5px; font-weight: 800; display: flex; align-items: center; justify-content: center; border: 1.5px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">LO</div>
+                                <div style="text-align: center; width: 100%;">
+                                    <div class="mini-cv-section-title" style="color: #7c3aed; border: none; font-size: 3.8px; margin-bottom: 2px;">Contact</div>
+                                    <div class="mini-cv-text" style="font-size: 3px; scale: 0.9;">✉️ liam.oc</div>
+                                    <div class="mini-cv-text" style="font-size: 3px; scale: 0.9;">🌐 figma.net</div>
+                                </div>
+                                <div style="text-align: center; width: 100%;">
+                                    <div class="mini-cv-section-title" style="color: #7c3aed; border: none; font-size: 3.8px; margin-bottom: 2px;">Skills</div>
+                                    <span class="mini-cv-tag" style="font-size: 2.8px; background: #f5f3ff; color: #7c3aed;">Figma</span>
+                                    <span class="mini-cv-tag" style="font-size: 2.8px; background: #f5f3ff; color: #7c3aed;">UX Research</span>
+                                </div>
+                            </div>
+                            <div style="padding: 10px 8px 10px 4px; display: flex; flex-direction: column; justify-content: flex-start; gap: 4px; overflow: hidden;">
+                                <div class="mini-cv-name" style="color: #7c3aed; font-size: 7.5px;">Liam O'Connor</div>
+                                <div class="mini-cv-title" style="color: var(--slate-600); font-size: 4.5px;">UI/UX Designer</div>
+                                <div class="mini-cv-divider" style="margin: 1px 0 2px 0;"></div>
+                                
+                                <div class="mini-cv-section-title" style="color: #7c3aed; border-bottom: 1px solid #e9d5ff; margin-top: 1px;">Summary</div>
+                                <p class="mini-cv-text" style="font-size: 3.2px; line-height: 1.25;">Award-winning creative craftsman of digital product interfaces.</p>
+                                
+                                <div class="mini-cv-section-title" style="color: #7c3aed; border-bottom: 1px solid #e9d5ff; margin-top: 1px;">Experience</div>
+                                <div class="mini-cv-item">
+                                    <div class="mini-cv-item-title" style="font-size: 3.8px;">Lead Designer</div>
+                                    <div class="mini-cv-item-company" style="font-size: 3.2px;">Figma Studio • 2021-Pres</div>
+                                    <ul class="mini-cv-bullets" style="padding-left: 3px;">
+                                        <li style="font-size: 3.2px;">Rebuilt global systems</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="showcase-meta">
+                        <h4 class="showcase-title">Amethyst Split</h4>
+                        <span class="showcase-tag">Marketing & Design</span>
+                    </div>
+                </div>
+
+                <!-- Saffron Accent (New!) -->
+                <div class="showcase-item clickable-template-card" data-showcase-id="saffron" data-categories='["all", "executive"]' title="Click to customize Saffron Accent in Studio">
+                    <div class="showcase-image-box saffron-gradient">
+                        <div class="showcase-hover-overlay">
+                            <span class="overlay-sparkle">✦</span>
+                            <span class="overlay-btn-text">Customize Style</span>
+                        </div>
+                        <div class="showcase-inner-cv layout-clean" style="font-family: Georgia, serif; padding: 12px 14px; border-left: 3px solid #d97706;">
+                            <div style="text-align: center; width: 100%;">
+                                <div class="mini-cv-name" style="font-size: 8px; font-weight: 500; font-family: Georgia, serif; letter-spacing: 0.05em; color: #b45309;">ELENA ROSTOVA</div>
+                                <div class="mini-cv-title" style="color: var(--slate-600); font-size: 4px; font-family: Georgia, serif; letter-spacing: 0.1em; border-bottom: 1px solid #b45309; padding-bottom: 2px; margin-bottom: 3px;">VP OF SALES</div>
+                                <div style="display: flex; gap: 4px; justify-content: center; font-size: 3px; color: var(--slate-50); margin-bottom: 4px; background: rgba(0,0,0,0.15); padding: 1px 4px; border-radius: 99px;">
+                                    <span>elena.r@email.com</span> • <span>Boston, MA</span>
+                                </div>
+                            </div>
+                            
+                            <div style="width: 100%;">
+                                <div class="mini-cv-section-title" style="border-bottom: 1px solid #f59e0b; font-family: Georgia, serif; font-size: 4.5px; font-weight: 700; color: #b45309; margin-top: 1px;">Summary</div>
+                                <p class="mini-cv-text" style="font-family: Georgia, serif; font-size: 3.5px; color: #333; line-height: 1.3; text-align: justify;">High-performing sales leader overseeing SaaS pipelines and custom branding metrics.</p>
+                            </div>
+                            
+                            <div style="width: 100%;">
+                                <div class="mini-cv-section-title" style="border-bottom: 1px solid #f59e0b; font-family: Georgia, serif; font-size: 4.5px; font-weight: 700; color: #b45309; margin-top: 2px;">Experience</div>
+                                <div class="mini-cv-item" style="margin-bottom: 2px;">
+                                    <div style="display: flex; justify-content: space-between; font-size: 3.8px; font-weight: 700;">
+                                        <span>VP of Sales</span>
+                                        <span>2020 – Present</span>
+                                    </div>
+                                    <div class="mini-cv-item-company" style="font-family: Georgia, serif; font-size: 3.5px; margin-bottom: 1px;">HubSpot, Boston</div>
+                                    <ul class="mini-cv-bullets" style="padding-left: 6px; list-style-type: square;">
+                                        <li style="font-family: Georgia, serif; font-size: 3.2px;">Drove ARR expansion by 40%.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="showcase-meta">
+                        <h4 class="showcase-title">Saffron Accent</h4>
+                        <span class="showcase-tag">Legal & Management</span>
+                    </div>
+                </div>
+
+                <!-- GitHub Open Source Template Contribution Card (GitHub Project Specific!) -->
+                <div class="showcase-item github-contribution-card" data-showcase-id="github-contribution" data-categories='["all", "github"]' title="Fork CVPilot on GitHub & Submit Templates">
+                    <div class="showcase-image-box github-dark-gradient">
+                        <div class="showcase-hover-overlay" style="background: rgba(36, 41, 46, 0.4);">
+                            <span class="overlay-sparkle">🐙</span>
+                            <span class="overlay-btn-text">Fork on GitHub</span>
+                        </div>
+                        <div class="github-card-inner">
+                            <div class="github-octocat">
+                                <svg height="36" viewBox="0 0 16 16" width="36" fill="currentColor">
+                                    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+                                </svg>
+                            </div>
+                            <h4 class="github-card-title">Add Your Design!</h4>
+                            <p class="github-card-desc">CVPilot is a fully open-source GitHub project. Pull Requests are welcome!</p>
+                            <div class="github-stats-row">
+                                <span class="github-stat"><span class="github-tag-sparkle">★</span> Star</span>
+                                <span class="github-stat"><span class="github-tag-sparkle">⌥</span> Fork</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="showcase-meta">
+                        <h4 class="showcase-title">Open Source Contributions</h4>
+                        <span class="showcase-tag github-tag">GitHub Open Source</span>
                     </div>
                 </div>
             </div>
@@ -1072,7 +1257,11 @@
                     </div>
 
                     <!-- Export and download -->
-                    <div class="studio-widget-section action-buttons" style="margin-top: auto; padding-top: 15px; border-top: 1px solid rgba(226,232,240,0.8);">
+                    <div class="studio-widget-section action-buttons" style="margin-top: auto; padding-top: 15px; border-top: 1px solid rgba(226,232,240,0.8); display: flex; flex-direction: column; gap: 10px;">
+                        <button class="btn btn-secondary w-full" id="modal-btn-save-cloud" style="border: 1px dashed var(--primary-blue); color: var(--primary-blue); background: rgba(59, 130, 246, 0.05); display: flex; align-items: center; justify-content: center;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width: 15px; height: 15px; margin-right: 8px; vertical-align: -1px;"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                            Save Resume to Cloud
+                        </button>
                         <button class="btn btn-primary w-full" id="modal-btn-download" style="background: linear-gradient(135deg, var(--primary-blue) 0%, #1d4ed8 100%);">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width: 15px; height: 15px; margin-right: 8px; vertical-align: -1px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                             Export & Download PDF
@@ -1184,11 +1373,11 @@
                         <span>or continue with</span>
                     </div>
                     <div class="social-auth-grid">
-                        <button class="btn btn-secondary social-btn" type="button">
+                        <button class="btn btn-secondary social-btn" type="button" id="btn-google-login" data-auth-provider="google" aria-label="Continue with Google">
                             <img src="https://lh3.googleusercontent.com/COxitPIgdm18OIy4g1gKpxUeLs5tVrrC3F5Oh3v09hM632v6qVv4HysGv2LwFWhg848" alt="Google" style="width: 16px; height: 16px; margin-right: 8px;">
-                            Google
+                            Continue with Google
                         </button>
-                        <button class="btn btn-secondary social-btn" type="button">
+                        <button class="btn btn-secondary social-btn" type="button" id="btn-github-login">
                             <svg viewBox="0 0 24 24" fill="currentColor" style="width: 16px; height: 16px; margin-right: 8px; color: #1f2937;"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482C19.138 20.193 22 16.44 22 12.017 22 6.484 17.522 2 12 2z"></path></svg>
                             GitHub
                         </button>
