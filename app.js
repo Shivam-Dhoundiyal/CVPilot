@@ -739,10 +739,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalAtsScoreNum = document.getElementById('modal-ats-score-num');
     const modalAtsProgress = document.getElementById('modal-ats-progress');
     const modalAtsStatusBadge = document.getElementById('modal-ats-status-badge');
+    const editorTabButtons = document.querySelectorAll('.editor-tab-btn');
+    const editorContentPanel = document.querySelector('.editor-content-panel');
+    const editorAddContentBtn = document.querySelector('.editor-add-content-btn');
+    const editorProfileEditBtn = document.querySelector('.profile-edit-btn');
+    const editorTopActions = document.querySelector('.editor-top-actions');
 
     let activeModalShowcaseId = null;
     let modalAtsScore = 0;
     let modalIsAiOptimized = false;
+    let editorToolPanel = null;
+    let editorMoreMenu = null;
 
     // Premium dynamic design color palettes for each theme
     const themePalettes = {
@@ -781,6 +788,84 @@ document.addEventListener('DOMContentLoaded', () => {
             { name: "Crimson Red", primary: "#ef4444", dark: "#fff5f5" },
             { name: "Burnt Orange", primary: "#ea580c", dark: "#fff7ed" },
             { name: "Slate Dark", primary: "#334155", dark: "#f8fafc" }
+        ],
+        wayne: [
+            { name: "Deep Navy (Default)", primary: "#183746", dark: "#183746" },
+            { name: "Graphite Navy", primary: "#334155", dark: "#111827" },
+            { name: "Executive Teal", primary: "#0f766e", dark: "#134e4a" },
+            { name: "Burgundy Boardroom", primary: "#9f1239", dark: "#4c0519" }
+        ],
+        rivera: [
+            { name: "Warm Stone (Default)", primary: "#4b5563", dark: "#e2e2df" },
+            { name: "Sales Blue", primary: "#2563eb", dark: "#dbeafe" },
+            { name: "Olive Ledger", primary: "#4d7c0f", dark: "#ecfccb" },
+            { name: "Soft Charcoal", primary: "#1f2937", dark: "#e5e7eb" }
+        ],
+        patel: [
+            { name: "Engineering Blue (Default)", primary: "#0f3446", dark: "#e8ecef" },
+            { name: "Steel Gray", primary: "#475569", dark: "#f1f5f9" },
+            { name: "Industrial Green", primary: "#15803d", dark: "#dcfce7" },
+            { name: "Safety Amber", primary: "#d97706", dark: "#fef3c7" }
+        ],
+        "atlantic-blue": [
+            { name: "Atlantic Blue (Default)", primary: "#2563eb", dark: "#dbeafe" },
+            { name: "Deep Ocean", primary: "#0f3b66", dark: "#e0f2fe" },
+            { name: "Emerald Atlantic", primary: "#059669", dark: "#dcfce7" },
+            { name: "Graphite Blue", primary: "#334155", dark: "#e2e8f0" }
+        ],
+        "mercury-flow": [
+            { name: "Mercury Gray (Default)", primary: "#4b5563", dark: "#f4f1eb" },
+            { name: "Ink Serif", primary: "#18181b", dark: "#f8fafc" },
+            { name: "Burgundy Serif", primary: "#9f1239", dark: "#fff1f2" },
+            { name: "Executive Teal", primary: "#0f766e", dark: "#f0fdfa" }
+        ],
+        "steady-form": [
+            { name: "Steady Slate (Default)", primary: "#475569", dark: "#f1f5f9" },
+            { name: "Blue System", primary: "#2563eb", dark: "#dbeafe" },
+            { name: "Green System", primary: "#16a34a", dark: "#dcfce7" },
+            { name: "Amber System", primary: "#d97706", dark: "#fef3c7" }
+        ],
+        "classic-serif-flow": [
+            { name: "Classic Ink (Default)", primary: "#27272a", dark: "#ffffff" },
+            { name: "Warm Paper", primary: "#7c2d12", dark: "#fff7ed" },
+            { name: "Formal Navy", primary: "#1e3a8a", dark: "#eff6ff" },
+            { name: "Academic Green", primary: "#166534", dark: "#f0fdf4" }
+        ],
+        "executive-flow": [
+            { name: "Boardroom Black (Default)", primary: "#111827", dark: "#e5e7eb" },
+            { name: "Cobalt Boardroom", primary: "#1d4ed8", dark: "#dbeafe" },
+            { name: "Burgundy Boardroom", primary: "#9f1239", dark: "#ffe4e6" },
+            { name: "Forest Boardroom", primary: "#166534", dark: "#dcfce7" }
+        ],
+        "leaves-flow": [
+            { name: "Leaf Green (Default)", primary: "#15803d", dark: "#dcfce7" },
+            { name: "Sage Creative", primary: "#4d7c0f", dark: "#ecfccb" },
+            { name: "Ocean Creative", primary: "#0f766e", dark: "#ccfbf1" },
+            { name: "Rose Creative", primary: "#be185d", dark: "#fce7f3" }
+        ],
+        "saffron-line": [
+            { name: "Saffron Line (Default)", primary: "#d97706", dark: "#fff7ed" },
+            { name: "Crimson Line", primary: "#dc2626", dark: "#fee2e2" },
+            { name: "Cobalt Line", primary: "#2563eb", dark: "#dbeafe" },
+            { name: "Teal Line", primary: "#0d9488", dark: "#ccfbf1" }
+        ],
+        quicksilver: [
+            { name: "Quicksilver (Default)", primary: "#64748b", dark: "#f1f5f9" },
+            { name: "Graphite Silver", primary: "#334155", dark: "#e2e8f0" },
+            { name: "Blue Silver", primary: "#2563eb", dark: "#e0f2fe" },
+            { name: "Violet Silver", primary: "#7c3aed", dark: "#ede9fe" }
+        ],
+        "cobalt-edge": [
+            { name: "Cobalt Edge (Default)", primary: "#1d4ed8", dark: "#dbeafe" },
+            { name: "Indigo Edge", primary: "#4f46e5", dark: "#e0e7ff" },
+            { name: "Teal Edge", primary: "#0d9488", dark: "#ccfbf1" },
+            { name: "Charcoal Edge", primary: "#1f2937", dark: "#e5e7eb" }
+        ],
+        "compact-serif-flow": [
+            { name: "Compact Serif (Default)", primary: "#27272a", dark: "#ffffff" },
+            { name: "Navy Compact", primary: "#1e3a8a", dark: "#eff6ff" },
+            { name: "Sepia Compact", primary: "#92400e", dark: "#fffbeb" },
+            { name: "Emerald Compact", primary: "#047857", dark: "#ecfdf5" }
         ]
     };
 
@@ -848,6 +933,57 @@ document.addEventListener('DOMContentLoaded', () => {
         modalCvCanvas.style.backgroundColor = palette.dark === '#ffffff' ? '#ffffff' : palette.dark;
     }
 
+    function applyReferencePalette(themeId, palette) {
+        const titles = modalCvCanvas.querySelectorAll('.mini-cv-section-title');
+        titles.forEach(t => {
+            t.style.backgroundColor = palette.dark;
+            t.style.color = themeId === 'wayne' ? '#ffffff' : palette.primary;
+        });
+
+        const names = modalCvCanvas.querySelectorAll('.mini-cv-name');
+        names.forEach(name => {
+            name.style.color = themeId === 'wayne' ? '#ffffff' : palette.primary;
+        });
+
+        if (themeId === 'wayne') {
+            const sidebar = modalCvCanvas.querySelector('.reference-sidebar');
+            if (sidebar) sidebar.style.backgroundColor = palette.primary;
+        } else {
+            const topBand = modalCvCanvas.querySelector('.reference-topband');
+            if (topBand) topBand.style.backgroundColor = palette.dark;
+        }
+    }
+
+    function applyFlowcvPalette(palette) {
+        const flowCv = modalCvCanvas.querySelector('.flowcv-template');
+        if (!flowCv) return;
+
+        flowCv.style.backgroundColor = '#ffffff';
+
+        const headings = flowCv.querySelectorAll('.mini-cv-section-title, .mini-cv-tag');
+        headings.forEach(el => {
+            el.style.color = palette.primary;
+        });
+
+        const rules = flowCv.querySelectorAll('.flowcv-head, .flowcv-line-head, .flowcv-edge-head, .flowcv-centered-head');
+        rules.forEach(el => {
+            el.style.borderColor = palette.primary;
+        });
+
+        const initial = flowCv.querySelector('.flowcv-initial');
+        if (initial) initial.style.backgroundColor = palette.primary;
+
+        const band = flowCv.querySelector('.flowcv-band-head');
+        if (band) {
+            band.style.backgroundColor = palette.primary;
+        }
+
+        const leaf = flowCv.querySelector('.flowcv-leaf-mark');
+        if (leaf) {
+            leaf.style.backgroundColor = palette.dark;
+        }
+    }
+
     function applyPalette(themeId, palette) {
         if (themeId === 'slate' || themeId === 'emerald') {
             applySlatePalette(palette);
@@ -855,13 +991,17 @@ document.addEventListener('DOMContentLoaded', () => {
             applyPurplePalette(palette);
         } else if (themeId === 'minimalist' || themeId === 'saffron') {
             applyMinimalistPalette(palette);
+        } else if (themeId === 'wayne' || themeId === 'rivera' || themeId === 'patel') {
+            applyReferencePalette(themeId, palette);
+        } else {
+            applyFlowcvPalette(palette);
         }
     }
 
     // Render Swatches Picker
     function renderPaletteButtons(themeId) {
         modalColorPicker.innerHTML = '';
-        const palettes = themePalettes[themeId];
+        const palettes = themePalettes[themeId] || themePalettes.slate;
         palettes.forEach((p, idx) => {
             const btn = document.createElement('button');
             btn.className = `palette-swapper-btn ${idx === 0 ? 'active' : ''}`;
@@ -885,6 +1025,514 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             
             modalColorPicker.appendChild(btn);
+        });
+    }
+
+    const modalBaseScores = {
+        slate: 95,
+        emerald: 95,
+        rivera: 96,
+        patel: 97,
+        wayne: 94,
+        "atlantic-blue": 96,
+        "mercury-flow": 94,
+        "steady-form": 95,
+        "classic-serif-flow": 93,
+        "executive-flow": 96,
+        "leaves-flow": 91,
+        "saffron-line": 95,
+        quicksilver: 95,
+        "cobalt-edge": 94,
+        "compact-serif-flow": 94,
+        purple: 92,
+        amethyst: 92,
+        minimalist: 89,
+        saffron: 89
+    };
+
+    function getModalBaseScore(showcaseId) {
+        return modalBaseScores[showcaseId] || 92;
+    }
+
+    function getActiveTemplateTitle() {
+        if (!activeModalShowcaseId) return 'No template selected';
+        const card = document.querySelector(`.clickable-template-card[data-showcase-id="${activeModalShowcaseId}"]`);
+        return card?.querySelector('.showcase-title')?.textContent?.trim() || activeModalShowcaseId;
+    }
+
+    function setEditorSectionsVisible(isVisible) {
+        editorContentPanel?.querySelectorAll('.editor-section-card, .editor-profile-card').forEach(card => {
+            card.style.display = isVisible ? '' : 'none';
+        });
+        const addBtn = editorContentPanel?.querySelector('.editor-add-content-btn');
+        if (addBtn) {
+            addBtn.style.display = isVisible ? 'inline-flex' : 'none';
+        }
+    }
+
+    function buildEditorContentSidebar() {
+        if (!editorContentPanel) return;
+
+        // Clear existing elements
+        editorContentPanel.innerHTML = '';
+
+        // 1. Retrieve profile details from canvas
+        const nameNode = modalCvCanvas.querySelector('#cv-name-text') || modalCvCanvas.querySelector('.cv-name') || modalCvCanvas.querySelector('.mini-cv-name');
+        const titleNode = modalCvCanvas.querySelector('#cv-title-text') || modalCvCanvas.querySelector('.cv-title') || modalCvCanvas.querySelector('.mini-cv-title');
+        
+        let email = '';
+        let phone = '';
+        let location = '';
+        
+        const contactNodes = modalCvCanvas.querySelectorAll('.cv-contact-item, [id*="email"], [id*="phone"], [id*="contact"], .cv-item-bullets li, .reference-contact-list p, .mini-cv-text');
+        contactNodes.forEach(node => {
+            const txt = node.textContent.trim();
+            if (txt.includes('@')) email = txt;
+            else if (txt.match(/\+?\d[\d-\s()]{7,15}/)) phone = txt;
+            else if (txt.length > 3 && txt.length < 30 && !txt.includes('linkedin') && !txt.includes('github') && !email && !phone) {
+                // simple location heuristic
+                if (txt.includes(',') || txt.match(/[A-Z]{2}/)) location = txt;
+            }
+        });
+
+        const name = nameNode ? nameNode.textContent.trim() : 'James Anderson';
+        const title = titleNode ? titleNode.textContent.trim() : 'Marketing Manager';
+        email = email || 'james.anderson@email.com';
+        phone = phone || '+1 (555) 123-4567';
+        location = location || 'New York, NY';
+
+        // 2. Create the editor-profile-card
+        const profileCard = document.createElement('section');
+        profileCard.className = 'editor-profile-card';
+        profileCard.innerHTML = `
+            <div class="profile-details-info">
+                <h3>${name}</h3>
+                <p>${title}</p>
+                <p style="font-size: 14px; margin-top: 8px; color: #6b7280;">${email} &bull; ${phone} &bull; ${location}</p>
+            </div>
+            <button class="profile-edit-btn" type="button" aria-label="Edit Profile">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="m16.5 3.5 4 4L7 21H3v-4L16.5 3.5z"></path></svg>
+                Edit
+            </button>
+        `;
+        editorContentPanel.appendChild(profileCard);
+
+        // 3. Multi-template section scraper
+        const addedNodePaths = new Set();
+        const sectionNodes = [];
+
+        const registerSection = (node, titleNode, itemsQuery) => {
+            if (!node || !titleNode || addedNodePaths.has(node)) return;
+            const titleText = titleNode.textContent.trim();
+            if (!titleText || titleText.toLowerCase().includes('contact')) return;
+            
+            addedNodePaths.add(node);
+            sectionNodes.push({
+                node,
+                titleNode,
+                titleText,
+                itemsQuery
+            });
+        };
+
+        // Slate/Emerald/Purple style templates
+        modalCvCanvas.querySelectorAll('.cv-section').forEach(node => {
+            registerSection(node, node.querySelector('.cv-section-title'), '.cv-item, .cv-item-role, .cv-section-p, .skill-tag, li');
+        });
+
+        // Wayne/Rivera style templates
+        modalCvCanvas.querySelectorAll('.reference-sidebar-block').forEach(node => {
+            registerSection(node, node.querySelector('.mini-cv-section-title'), '.mini-cv-text, .mini-cv-tag, li');
+        });
+        modalCvCanvas.querySelectorAll('.reference-main section, .reference-main > div').forEach(node => {
+            registerSection(node, node.querySelector('.mini-cv-section-title'), '.mini-cv-item, .mini-cv-item-title, .mini-cv-tag, li');
+        });
+
+        // FlowCV style templates
+        modalCvCanvas.querySelectorAll('.flowcv-template section, .flowcv-column section, [class*="-template"] section, [class*="-template"] .cv-section').forEach(node => {
+            registerSection(node, node.querySelector('.mini-cv-section-title, .cv-section-title, h3, h4'), '.cv-item, .mini-cv-text, .mini-cv-tag, li');
+        });
+
+        // Build sidebar cards
+        sectionNodes.forEach((sec, secIdx) => {
+            const sectionCard = document.createElement('section');
+            sectionCard.className = 'editor-section-card collapsed';
+            sectionCard.dataset.sectionIndex = secIdx;
+
+            // Generate rows for each item or entry
+            const items = sec.node.querySelectorAll(sec.itemsQuery);
+            let rowsHtml = '';
+            
+            items.forEach((itemNode, itemIdx) => {
+                let label = itemNode.textContent.trim();
+                if (label.length > 45) label = label.substring(0, 42) + '...';
+                
+                const isHidden = itemNode.style.display === 'none';
+                rowsHtml += `
+                    <div class="editor-entry-row ${isHidden ? 'muted' : ''}" data-entry-index="${itemIdx}" style="display: none;">
+                        <span class="drag-dots">::</span>
+                        <strong>${label || 'New Entry'}</strong>
+                        <button type="button" aria-label="Toggle entry visibility">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        </button>
+                    </div>
+                `;
+            });
+
+            sectionCard.innerHTML = `
+                <div class="editor-section-heading">
+                    <div class="editor-section-title">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 4h16v16H4z"></path></svg>
+                        <h3>${sec.titleText}</h3>
+                    </div>
+                    <button class="edit-heading-btn" type="button">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="m16.5 3.5 4 4L7 21H3v-4L16.5 3.5z"></path></svg>
+                        Edit Heading
+                    </button>
+                    <svg class="section-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m18 15-6-6-6 6"></path></svg>
+                </div>
+                ${rowsHtml}
+                <div class="editor-entry-actions" style="display: none;">
+                    <button class="editor-add-entry-btn" type="button"><span>+</span>Add Entry</button>
+                    <button class="editor-delete-entry-btn" type="button" aria-label="Delete entry">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 6h18"></path><path d="M8 6V4h8v2"></path><path d="m19 6-1 14H6L5 6"></path></svg>
+                    </button>
+                </div>
+            `;
+
+            editorContentPanel.appendChild(sectionCard);
+        });
+
+        // 4. Create and append the "Add Section" button
+        const addBtn = document.createElement('button');
+        addBtn.className = 'editor-add-content-btn';
+        addBtn.type = 'button';
+        addBtn.innerHTML = `<span>+</span>Add Content Section`;
+        addBtn.style.marginTop = '16px';
+        editorContentPanel.appendChild(addBtn);
+    }
+
+    function clearEditorToolPanel() {
+        editorToolPanel?.remove();
+        editorToolPanel = null;
+    }
+
+    function createEditorToolPanel(title, subtitle) {
+        clearEditorToolPanel();
+        editorToolPanel = document.createElement('section');
+        editorToolPanel.className = 'editor-tool-card';
+        editorToolPanel.innerHTML = `
+            <div class="editor-tool-card-head">
+                <h3>${title}</h3>
+                <p>${subtitle}</p>
+            </div>
+            <div class="editor-tool-card-body"></div>
+        `;
+        const profileCard = editorContentPanel?.querySelector('.editor-profile-card');
+        if (profileCard) {
+            profileCard.insertAdjacentElement('afterend', editorToolPanel);
+        } else {
+            editorContentPanel?.prepend(editorToolPanel);
+        }
+        return editorToolPanel.querySelector('.editor-tool-card-body');
+    }
+
+    function applyEditorFont(font) {
+        const normalizedFont = font === 'mono' ? 'monospace' : font;
+        modalCvCanvas.classList.remove('font-sans', 'font-serif', 'font-monospace');
+        modalCvCanvas.classList.add(`font-${normalizedFont}`);
+
+        modalFontPicker.querySelectorAll('.font-picker-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.getAttribute('data-font') === normalizedFont);
+        });
+
+        const label = modalFontPicker.querySelector(`.font-picker-btn[data-font="${normalizedFont}"] .font-name-label`)?.textContent || normalizedFont;
+        showToast(`Typographic profile updated to: ${label}`);
+        updateModalAtsScore(Math.min(modalAtsScore + 2, 100));
+    }
+
+    function showCustomizeControls() {
+        setEditorSectionsVisible(false);
+        const body = createEditorToolPanel('Customize', 'Change color palette and typography for the selected resume template.');
+        const themeId = activeModalShowcaseId || 'slate';
+        const palettes = themePalettes[themeId] || themePalettes.slate;
+
+        body.innerHTML = `
+            <div class="editor-tool-group">
+                <h4>Design Palettes</h4>
+                <div class="editor-visible-palette"></div>
+            </div>
+            <div class="editor-tool-group">
+                <h4>Typography</h4>
+                <div class="editor-visible-fonts">
+                    <button type="button" data-font="sans">Jakarta Sans</button>
+                    <button type="button" data-font="serif">Georgia Serif</button>
+                    <button type="button" data-font="monospace">Tech Monospace</button>
+                </div>
+            </div>
+        `;
+
+        const paletteWrap = body.querySelector('.editor-visible-palette');
+        palettes.forEach((palette, idx) => {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = `editor-palette-btn ${idx === 0 ? 'active' : ''}`;
+            button.style.backgroundColor = palette.primary;
+            button.title = palette.name;
+            button.addEventListener('click', () => {
+                paletteWrap.querySelectorAll('.editor-palette-btn').forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                applyPalette(themeId, palette);
+                updateModalAtsScore(Math.min(modalAtsScore + 1, 100));
+                showToast(`Theme color palette switched to "${palette.name}"`);
+            });
+            paletteWrap.appendChild(button);
+        });
+
+        body.querySelectorAll('.editor-visible-fonts button').forEach(button => {
+            const font = button.getAttribute('data-font');
+            button.classList.toggle('active', modalCvCanvas.classList.contains(`font-${font}`));
+            button.addEventListener('click', () => {
+                body.querySelectorAll('.editor-visible-fonts button').forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                applyEditorFont(font);
+            });
+        });
+    }
+
+    function showAiToolsControls() {
+        setEditorSectionsVisible(false);
+        const body = createEditorToolPanel('AI Tools', 'Run resume optimization, save the current layout, and monitor ATS readiness.');
+        body.innerHTML = `
+            <div class="editor-tool-group">
+                <button class="editor-tool-primary" type="button" data-action="ai-optimize">AI Optimize Resume</button>
+                <button class="editor-tool-secondary" type="button" data-action="save-cloud">Save Resume to Cloud</button>
+            </div>
+            <div class="editor-ats-inline">
+                <strong>${modalAtsScore || getModalBaseScore(activeModalShowcaseId)}%</strong>
+                <span>${modalAtsStatusBadge.textContent || 'ATS readiness'}</span>
+            </div>
+        `;
+
+        body.querySelector('[data-action="ai-optimize"]').addEventListener('click', () => modalAiOptimizeBtn.click());
+        body.querySelector('[data-action="save-cloud"]').addEventListener('click', () => document.getElementById('modal-btn-save-cloud')?.click());
+    }
+
+    function showOverviewControls() {
+        setEditorSectionsVisible(false);
+        const body = createEditorToolPanel('Overview', 'Review the current template status and quick actions.');
+        body.innerHTML = `
+            <div class="editor-overview-row">
+                <span>Selected template</span>
+                <strong>${getActiveTemplateTitle()}</strong>
+            </div>
+            <div class="editor-overview-row">
+                <span>ATS score</span>
+                <strong>${modalAtsScore || getModalBaseScore(activeModalShowcaseId)}%</strong>
+            </div>
+            <div class="editor-tool-group">
+                <button class="editor-tool-secondary" type="button" data-action="save-cloud">Save Resume to Cloud</button>
+                <button class="editor-tool-primary" type="button" data-action="download">Download PDF</button>
+            </div>
+        `;
+
+        body.querySelector('[data-action="save-cloud"]').addEventListener('click', () => document.getElementById('modal-btn-save-cloud')?.click());
+        body.querySelector('[data-action="download"]').addEventListener('click', () => modalBtnDownload.click());
+    }
+
+    function showContentControls() {
+        clearEditorToolPanel();
+        buildEditorContentSidebar();
+    }
+
+    function setEditorTab(tabName) {
+        editorTabButtons.forEach(button => {
+            button.classList.toggle('active', button.textContent.trim().toLowerCase().includes(tabName));
+        });
+
+        if (tabName === 'overview') {
+            showOverviewControls();
+        } else if (tabName === 'customize') {
+            showCustomizeControls();
+        } else if (tabName === 'ai') {
+            showAiToolsControls();
+        } else {
+            showContentControls();
+        }
+    }
+
+    function ensureEditorSectionBody(card) {
+        // Body is fully generated dynamically during buildEditorContentSidebar
+    }
+
+    function toggleEditorSection(card) {
+        if (!card) return;
+        const isExpanded = card.classList.contains('expanded');
+        if (isExpanded) {
+            card.classList.remove('expanded');
+            card.classList.add('collapsed');
+            card.querySelectorAll('.editor-entry-row, .editor-entry-actions').forEach(el => {
+                el.style.display = 'none';
+            });
+        } else {
+            card.classList.add('expanded');
+            card.classList.remove('collapsed');
+            card.querySelectorAll('.editor-entry-row, .editor-entry-actions').forEach(el => {
+                el.style.display = '';
+            });
+        }
+    }
+
+    function addEditorEntry(card) {
+        if (!card) return;
+        const secIdx = card.dataset.sectionIndex;
+        if (secIdx === undefined) return;
+        
+        const canvasSections = modalCvCanvas.querySelectorAll('.cv-section');
+        const canvasSec = canvasSections[secIdx];
+        if (!canvasSec) return;
+        
+        const list = canvasSec.querySelector('.cv-item-bullets, .cv-body') || canvasSec;
+        const newItem = document.createElement('li');
+        newItem.textContent = 'New bullet point entry';
+        newItem.setAttribute('contenteditable', 'true');
+        list.appendChild(newItem);
+        
+        buildEditorContentSidebar();
+        const newCard = editorContentPanel.querySelector(`[data-section-index="${secIdx}"]`);
+        if (newCard) {
+            newCard.classList.remove('collapsed');
+            newCard.classList.add('expanded');
+            newCard.querySelectorAll('.editor-entry-row, .editor-entry-actions').forEach(el => {
+                el.style.display = '';
+            });
+        }
+        newItem.focus();
+        showToast('Added a new bullet entry to the canvas.');
+    }
+
+    function deleteEditorEntry(card) {
+        if (!card) return;
+        const secIdx = card.dataset.sectionIndex;
+        if (secIdx === undefined) return;
+        
+        const canvasSections = modalCvCanvas.querySelectorAll('.cv-section');
+        const canvasSec = canvasSections[secIdx];
+        if (!canvasSec) return;
+        
+        const items = canvasSec.querySelectorAll('.cv-item, .cv-item-role, .cv-section-p, .skill-tag, li');
+        const lastItem = items[items.length - 1];
+        if (lastItem) {
+            lastItem.remove();
+            
+            buildEditorContentSidebar();
+            const newCard = editorContentPanel.querySelector(`[data-section-index="${secIdx}"]`);
+            if (newCard) {
+                newCard.classList.remove('collapsed');
+                newCard.classList.add('expanded');
+                newCard.querySelectorAll('.editor-entry-row, .editor-entry-actions').forEach(el => {
+                    el.style.display = '';
+                });
+            }
+            showToast('Removed the last entry from the canvas.');
+        }
+    }
+
+    function makeHeadingEditable(button) {
+        const card = button.closest('.editor-section-card');
+        const heading = card?.querySelector('.editor-section-title h3');
+        if (!heading) return;
+
+        heading.setAttribute('contenteditable', 'true');
+        heading.focus();
+        document.execCommand?.('selectAll', false, null);
+
+        const finish = () => {
+            heading.removeAttribute('contenteditable');
+            const titleText = heading.textContent.trim() || 'Untitled';
+            showToast(`Heading updated to "${titleText}".`);
+            
+            const secIdx = card.dataset.sectionIndex;
+            if (secIdx !== undefined) {
+                const canvasSections = modalCvCanvas.querySelectorAll('.cv-section');
+                const canvasSec = canvasSections[secIdx];
+                const canvasTitle = canvasSec?.querySelector('.cv-section-title');
+                if (canvasTitle) {
+                    canvasTitle.textContent = titleText.toUpperCase();
+                }
+            }
+            heading.removeEventListener('blur', finish);
+        };
+        heading.addEventListener('blur', finish);
+        heading.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                heading.blur();
+            }
+        }, { once: true });
+    }
+
+    function makeProfileEditable() {
+        const nameNode = modalCvCanvas.querySelector('#cv-name-text') || modalCvCanvas.querySelector('.cv-name');
+        if (nameNode) {
+            nameNode.setAttribute('contenteditable', 'true');
+            nameNode.focus();
+            showToast('Profile name is now editable in the preview.');
+        } else {
+            showToast('Double-click any profile field directly in the canvas preview to edit.');
+        }
+    }
+
+    function addEditorContentSection() {
+        const cvBody = modalCvCanvas.querySelector('.cv-body') || modalCvCanvas;
+        const newSec = document.createElement('div');
+        newSec.className = 'cv-section';
+        newSec.innerHTML = `
+            <h3 class="cv-section-title" contenteditable="true">NEW SECTION</h3>
+            <p class="cv-section-p" contenteditable="true">Add your details here.</p>
+        `;
+        cvBody.appendChild(newSec);
+        
+        buildEditorContentSidebar();
+        const cards = editorContentPanel.querySelectorAll('.editor-section-card');
+        if (cards.length > 0) {
+            toggleEditorSection(cards[cards.length - 1]);
+        }
+        showToast('Added a new custom section to the canvas.');
+    }
+
+    function closeEditorMoreMenu() {
+        editorMoreMenu?.remove();
+        editorMoreMenu = null;
+    }
+
+    function toggleEditorMoreMenu() {
+        if (editorMoreMenu) {
+            closeEditorMoreMenu();
+            return;
+        }
+
+        editorMoreMenu = document.createElement('div');
+        editorMoreMenu.className = 'editor-more-menu';
+        editorMoreMenu.innerHTML = `
+            <button type="button" data-action="download">Download PDF</button>
+            <button type="button" data-action="save">Save Resume</button>
+            <button type="button" data-action="close">Close Editor</button>
+        `;
+        editorTopActions?.appendChild(editorMoreMenu);
+
+        editorMoreMenu.addEventListener('click', (event) => {
+            const action = event.target.closest('button')?.getAttribute('data-action');
+            if (!action) return;
+            closeEditorMoreMenu();
+
+            if (action === 'download') {
+                modalBtnDownload.click();
+            } else if (action === 'save') {
+                document.getElementById('modal-btn-save-cloud')?.click();
+            } else {
+                closeModal();
+            }
         });
     }
 
@@ -956,8 +1604,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const length = el.textContent.length;
                     // Adding content slightly raises score, removing lowers it, simulating scanner checks
                     const fluctuation = Math.min(Math.floor(length / 22), 3);
-                    const baseScore = (activeModalShowcaseId === 'slate' || activeModalShowcaseId === 'emerald') ? 95 : 
-                                     ((activeModalShowcaseId === 'purple' || activeModalShowcaseId === 'amethyst') ? 92 : 89);
+                    const baseScore = getModalBaseScore(activeModalShowcaseId);
                     const finalScore = Math.min((modalIsAiOptimized ? 98 : baseScore) + fluctuation, 100);
                     
                     // Direct quick update to avoid full animated ticks during every keypress
@@ -975,17 +1622,6 @@ document.addEventListener('DOMContentLoaded', () => {
     clickableShowcaseCards.forEach(card => {
         card.addEventListener('click', (e) => {
             const showcaseId = card.getAttribute('data-showcase-id');
-            
-            // Protected Action check: require login
-            if (!isLoggedIn && showcaseId !== 'github-contribution') {
-                e.preventDefault();
-                e.stopPropagation();
-                authModal.classList.add('active');
-                switchAuthTab('tab-login');
-                document.body.style.overflow = 'hidden';
-                showToast("🔒 Protected Action: Please log in or sign up to customize this premium resume template.");
-                return;
-            }
 
             // Special GitHub Contribution Card Override
             if (showcaseId === 'github-contribution') {
@@ -1018,17 +1654,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (savedResume.canvasHtml.includes('font-serif')) {
                     modalFontPicker.querySelector('[data-font="serif"]').classList.add('active');
                     modalCvCanvas.classList.add('font-serif');
-                } else if (savedResume.canvasHtml.includes('font-mono')) {
-                    modalFontPicker.querySelector('[data-font="mono"]').classList.add('active');
-                    modalCvCanvas.classList.add('font-mono');
+                } else if (savedResume.canvasHtml.includes('font-monospace') || savedResume.canvasHtml.includes('font-mono')) {
+                    modalFontPicker.querySelector('[data-font="monospace"]')?.classList.add('active');
+                    modalCvCanvas.classList.add('font-monospace');
                 } else {
                     modalFontPicker.querySelector('[data-font="sans"]').classList.add('active');
                     modalCvCanvas.classList.add('font-sans');
                 }
+                renderPaletteButtons(showcaseId);
                 
                 // Display Modal overlay
                 studioModal.classList.add('active');
                 document.body.style.overflow = 'hidden';
+                setEditorTab('content');
                 
                 // Restore ATS score
                 setTimeout(() => {
@@ -1054,13 +1692,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 modalCvCanvas.className = "studio-interactive-cv-paper";
                 
                 modalFontPicker.querySelectorAll('.font-picker-btn').forEach(btn => btn.classList.remove('active'));
-                if (showcaseId === 'minimalist' || showcaseId === 'saffron') {
+                if (showcaseId === 'minimalist' || showcaseId === 'saffron' || showcaseId === 'wayne' || showcaseId === 'rivera' || showcaseId === 'mercury-flow' || showcaseId === 'classic-serif-flow' || showcaseId === 'compact-serif-flow') {
                     modalFontPicker.querySelector('[data-font="serif"]').classList.add('active');
                     modalCvCanvas.classList.add('font-serif');
                 } else {
                     modalFontPicker.querySelector('[data-font="sans"]').classList.add('active');
                     modalCvCanvas.classList.add('font-sans');
                 }
+                renderPaletteButtons(showcaseId);
                 
                 // Activate contenteditable tags
                 makeCanvasElementsEditable();
@@ -1068,12 +1707,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Display Modal overlay
                 studioModal.classList.add('active');
                 document.body.style.overflow = 'hidden'; // Stop standard page scroll
+                setEditorTab('content');
                 
                 // Initial score check animation
-                let initialScore = 92;
-                if (showcaseId === 'slate' || showcaseId === 'emerald') initialScore = 95;
-                if (showcaseId === 'purple' || showcaseId === 'amethyst') initialScore = 92;
-                if (showcaseId === 'minimalist' || showcaseId === 'saffron') initialScore = 89;
+                let initialScore = getModalBaseScore(showcaseId);
                 
                 setTimeout(() => {
                     updateModalAtsScore(initialScore);
@@ -1086,12 +1723,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Close Modal triggers
     const closeModal = () => {
+        closeEditorMoreMenu();
         studioModal.classList.remove('active');
         document.body.style.overflow = '';
         showToast("💼 Template customizer studio closed. Progress cached.");
     };
     
-    closeStudioBtn.addEventListener('click', closeModal);
+    closeStudioBtn.addEventListener('click', (event) => {
+        event.stopPropagation();
+        toggleEditorMoreMenu();
+    });
     
     studioModal.addEventListener('click', (e) => {
         if (e.target === studioModal) {
@@ -1099,19 +1740,100 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    document.addEventListener('click', (event) => {
+        if (editorMoreMenu && !event.target.closest('.editor-top-actions')) {
+            closeEditorMoreMenu();
+        }
+    });
+
+    editorTabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const label = button.textContent.trim().toLowerCase();
+            if (label.includes('overview')) {
+                setEditorTab('overview');
+            } else if (label.includes('customize')) {
+                setEditorTab('customize');
+            } else if (label.includes('ai')) {
+                setEditorTab('ai');
+            } else {
+                setEditorTab('content');
+            }
+        });
+    });
+
+    editorContentPanel?.addEventListener('click', (event) => {
+        const profileEditBtn = event.target.closest('.profile-edit-btn');
+        if (profileEditBtn) {
+            event.stopPropagation();
+            makeProfileEditable();
+            return;
+        }
+
+        const addContentBtn = event.target.closest('.editor-add-content-btn');
+        if (addContentBtn) {
+            event.stopPropagation();
+            addEditorContentSection();
+            return;
+        }
+
+        const editHeadingButton = event.target.closest('.edit-heading-btn');
+        if (editHeadingButton) {
+            event.stopPropagation();
+            makeHeadingEditable(editHeadingButton);
+            return;
+        }
+
+        const addEntryButton = event.target.closest('.editor-add-entry-btn');
+        if (addEntryButton) {
+            event.stopPropagation();
+            addEditorEntry(addEntryButton.closest('.editor-section-card'));
+            return;
+        }
+
+        const deleteEntryButton = event.target.closest('.editor-delete-entry-btn');
+        if (deleteEntryButton) {
+            event.stopPropagation();
+            deleteEditorEntry(deleteEntryButton.closest('.editor-section-card'));
+            return;
+        }
+
+        const previewButton = event.target.closest('.editor-entry-row button');
+        if (previewButton) {
+            event.stopPropagation();
+            const row = previewButton.closest('.editor-entry-row');
+            if (!row) return;
+            
+            const card = row.closest('.editor-section-card');
+            const secIdx = card?.dataset.sectionIndex;
+            const entryIdx = row.dataset.entryIndex;
+            
+            if (secIdx !== undefined && entryIdx !== undefined) {
+                const canvasSections = modalCvCanvas.querySelectorAll('.cv-section');
+                const canvasSec = canvasSections[secIdx];
+                const items = canvasSec?.querySelectorAll('.cv-item, .cv-item-role, .cv-section-p, .skill-tag, li');
+                const targetItem = items?.[entryIdx];
+                
+                if (targetItem) {
+                    const isHidden = targetItem.style.display === 'none';
+                    targetItem.style.display = isHidden ? '' : 'none';
+                    row.classList.toggle('muted', !isHidden);
+                    showToast(!isHidden ? 'Entry hidden from preview panel.' : 'Entry visible in preview panel.');
+                }
+            }
+            return;
+        }
+
+        const heading = event.target.closest('.editor-section-heading');
+        if (heading) {
+            toggleEditorSection(heading.closest('.editor-section-card'));
+        }
+    });
+
     // Typography selector events
     const fontPickerBtns = modalFontPicker.querySelectorAll('.font-picker-btn');
     fontPickerBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            fontPickerBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            
-            const font = btn.getAttribute('data-font');
-            modalCvCanvas.classList.remove('font-sans', 'font-serif', 'font-monospace');
-            modalCvCanvas.classList.add(`font-${font}`);
-            
-            showToast(`🔤 Typographic profile updated to: ${btn.querySelector('.font-name-label').textContent}`);
-            updateModalAtsScore(Math.min(modalAtsScore + 2, 100)); // Layout alignment boost
+            applyEditorFont(btn.getAttribute('data-font'));
         });
     });
 
@@ -1509,6 +2231,11 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Re-bind click event to profile badges
         bindDropdownEvents();
+
+        // Dynamic cloud resumes sync
+        if (typeof fetchUserResumes === 'function') {
+            fetchUserResumes();
+        }
     }
 
     // Switch Header markup back to guest
@@ -1733,6 +2460,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const reshaperModal = document.getElementById('reshaper-modal');
     const closeReshaperModal = document.getElementById('close-reshaper-modal');
     const parsedRawCvEditor = document.getElementById('parsed-raw-cv-editor');
+    const resumeIntentInput = document.getElementById('resume-intent-input');
+    const resumeIntentSummary = document.getElementById('resume-intent-summary');
     const reshaperProcessingLoader = document.getElementById('reshaper-processing-loader');
     const reshaperProgressBarFill = document.getElementById('reshaper-progress-bar-fill');
     const reshaperLoaderSteps = document.getElementById('reshaper-loader-steps');
@@ -1768,6 +2497,89 @@ SKILLS
 Microsoft Office, Communication, Teamwork, Social Media, Google Docs`;
 
     let boringResumeContentParsed = boringResumeContent;
+    let userResumeIntent = '';
+
+    function getUserIntent() {
+        const activeIntent = (resumeIntentInput?.value || userResumeIntent || '').trim();
+        return activeIntent || 'Rewrite the resume for a strong ATS-friendly career profile with measurable results and recruiter-focused keywords.';
+    }
+
+    function buildAiResumePrompt(rawText, intent) {
+        const targetIntent = intent || getUserIntent();
+        return `You are an expert AI resume writer. The user wants the resume rewritten according to this intent:\n"${targetIntent}"\n\nUse only the provided resume text. Preserve accuracy and do not invent companies, dates, or education. Rewrite the resume into a plain ATS-friendly format with headings, clean bullet points, strong action verbs, and keywords that match the target role. If information is missing, keep it honest and ask the user to confirm details.\n\nSource resume:\n${rawText}`;
+    }
+
+    function extractTargetRoleFromIntent(intent) {
+        if (!intent) return 'Professional';
+        const normalized = intent.toLowerCase();
+        const roles = ['product manager', 'marketing manager', 'engineer', 'software engineer', 'data analyst', 'project manager', 'sales manager', 'business analyst', 'designer', 'operations manager', 'customer success', 'consultant', 'director', 'analyst', 'specialist'];
+        for (const role of roles) {
+            if (normalized.includes(role)) return role.charAt(0).toUpperCase() + role.slice(1);
+        }
+        const match = normalized.match(/\b(senior|lead|head|principal|associate|junior)\b/);
+        return match ? `${match[0].charAt(0).toUpperCase() + match[0].slice(1)} Professional` : 'Professional';
+    }
+
+    function extractIndustryFromIntent(intent) {
+        if (!intent) return 'general business';
+        const normalized = intent.toLowerCase();
+        const industries = ['fintech', 'healthcare', 'technology', 'education', 'ecommerce', 'saas', 'finance', 'manufacturing', 'energy', 'consumer', 'retail'];
+        for (const industry of industries) {
+            if (normalized.includes(industry)) return industry;
+        }
+        return 'business';
+    }
+
+    function generateExperienceHighlights(targetRole, industry, count) {
+        const roleLabel = targetRole.includes('manager') ? targetRole : `${targetRole}`;
+        const industryPhrase = industry === 'business' ? 'cross-functional teams' : `${industry} stakeholders`;
+        const bullets = [
+            `Led cross-functional teams and delivered measurable outcomes for ${industryPhrase}, strengthening operational efficiency and audience growth.`,
+            `Optimized process execution across priority initiatives and improved key performance metrics by 20% or more.`,
+            `Translated complex objectives into clear operational plans and drove progress with data-backed decisions.`,
+            `Built and sustained stakeholder alignment while delivering high-quality work within tight timelines.`
+        ];
+        const secondaryBullets = [
+            `Executed targeted programs that improved customer engagement and revenue reach.`,
+            `Introduced scalable workflows for higher productivity and better reporting.`,
+            `Partnered with marketing, product, and analytics teams to increase campaign performance and conversion.`,
+            `Designed recommendations to reduce friction and accelerate execution.`
+        ];
+        return count === 1 ? [bullets.slice(0, 3)] : [bullets.slice(0, 3), secondaryBullets.slice(0, 3)];
+    }
+
+    function stripIntentFromText(text) {
+        return text.replace(/^Intent:[\s\S]*?\n\n/, '').trim();
+    }
+
+    function simulateAiRewrite(rawText, intent) {
+        const cleanedText = stripIntentFromText(rawText || '');
+        const targetRole = extractTargetRoleFromIntent(intent);
+        const industry = extractIndustryFromIntent(intent);
+        const rawSummary = optimizeTextClientSide(cleanedText);
+        const summary = `✦ AI REFLECTED: ${targetRole} with a strong focus on ${industry} results, strategic execution, and ATS-ready leadership. Proven ability to deliver measurable impact through cross-functional collaboration, data-backed planning, and high-impact execution.`;
+
+        const skills = [
+            targetRole.includes('marketing') ? 'Marketing Strategy' : 'Strategic Planning',
+            industry === 'fintech' ? 'Fintech Optimization' : 'Stakeholder Collaboration',
+            'Process Improvement',
+            'Performance Metrics',
+            'Cross-Functional Leadership',
+            'Outcome-Driven Execution'
+        ];
+
+        const experienceBlocks = generateExperienceHighlights(targetRole, industry, 2);
+        return {
+            name: rawSummary.name,
+            title: targetRole.toUpperCase(),
+            email: rawSummary.email,
+            phone: rawSummary.phone,
+            location: rawSummary.location,
+            summary,
+            skills,
+            experienceBlocks
+        };
+    }
 
     // Client-side NLP / Heuristics Optimization Engine
     function optimizeTextClientSide(text) {
@@ -1888,6 +2700,16 @@ Microsoft Office, Communication, Teamwork, Social Media, Google Docs`;
         });
     }
 
+    // User intent input updates
+    if (resumeIntentInput) {
+        resumeIntentInput.addEventListener('input', () => {
+            userResumeIntent = resumeIntentInput.value.trim();
+            if (resumeIntentSummary) {
+                resumeIntentSummary.textContent = userResumeIntent || 'No intent entered yet. The AI will optimize the resume for a general ATS-friendly role.';
+            }
+        });
+    }
+
     // Handle Uploaded File Details & States
     function handleUploadedFile(file) {
         const validExtensions = ['pdf', 'docx', 'doc', 'txt'];
@@ -1963,9 +2785,11 @@ Microsoft Office, Communication, Teamwork, Social Media, Google Docs`;
             if (reshaperModal && parsedRawCvEditor) {
                 reshaperModal.classList.add('active');
                 document.body.style.overflow = 'hidden';
-                
-                // Show parsed content in left panel
-                parsedRawCvEditor.textContent = boringResumeContentParsed;
+                const intentText = getUserIntent();
+                if (resumeIntentSummary) {
+                    resumeIntentSummary.textContent = intentText;
+                }
+                parsedRawCvEditor.textContent = `Intent: ${intentText}\n\n${boringResumeContentParsed}`;
                 
                 // Trigger compilation sequences
                 startReshaperEngine();
@@ -1977,16 +2801,20 @@ Microsoft Office, Communication, Teamwork, Social Media, Google Docs`;
     function startReshaperEngine() {
         if (!reshaperProcessingLoader || !reshaperProgressBarFill || !reshaperLoaderSteps || !reshaperStepBadge) return;
 
+        const intentText = getUserIntent();
+        const aiPrompt = buildAiResumePrompt(boringResumeContentParsed, intentText);
+        console.debug('AI generated prompt:', aiPrompt);
+
         reshaperProcessingLoader.style.display = 'flex';
         reshaperProgressBarFill.style.width = '0%';
-        reshaperStepBadge.textContent = "Phase: Optimizing Keywords...";
+        reshaperStepBadge.textContent = "Phase: Reflecting on user intent...";
         
         const diagnosticSteps = [
             { time: 0, text: "🔍 Dissecting raw plaintext sections & headers...", progress: 12 },
-            { time: 1300, text: "📊 Scanning layout parameters against recruiter filters...", progress: 35 },
-            { time: 2600, text: "✍️ Generating metrics-driven professional summary summary...", progress: 58 },
-            { time: 3900, text: "🎯 Aligning industry keywords and action metrics tags...", progress: 78 },
-            { time: 5200, text: "✨ Formatting nodes and applying glassmorphic aesthetics...", progress: 92 },
+            { time: 1300, text: `📊 Scanning intent for \"${intentText}\" and recruiter signals...`, progress: 35 },
+            { time: 2600, text: "✍️ Generating a strong ATS-friendly professional summary...", progress: 58 },
+            { time: 3900, text: "🎯 Aligning keywords, metrics, and role-specific impact statements...", progress: 78 },
+            { time: 5200, text: "✨ Formatting the resume into a clean, recruiter-ready layout...", progress: 92 },
             { time: 6500, text: "🎉 Compilation finished! Rendering premium matching preview...", progress: 100 }
         ];
 
@@ -2030,32 +2858,44 @@ Microsoft Office, Communication, Teamwork, Social Media, Google Docs`;
                 const clonedNode = originalMainCard.cloneNode(true);
                 clonedNode.id = 'cloned-reshaper-cv-card';
                 
-                // Parse dynamic client-side optimized text details
-                const opt = optimizeTextClientSide(parsedRawCvEditor.textContent || parsedRawCvEditor.innerText);
+                const intentText = getUserIntent();
+                const rawText = stripIntentFromText(parsedRawCvEditor.textContent || parsedRawCvEditor.innerText);
+                const aiOutput = simulateAiRewrite(rawText, intentText);
 
                 // Apply dynamic metadata
                 const nameEl = clonedNode.querySelector('#cv-name-text');
-                if (nameEl) nameEl.textContent = opt.name;
+                if (nameEl) nameEl.textContent = aiOutput.name;
                 
                 const titleEl = clonedNode.querySelector('#cv-title-text');
-                if (titleEl) titleEl.textContent = opt.title;
+                if (titleEl) titleEl.textContent = aiOutput.title;
 
                 // Update specific parsed components inside the clone with elite rewrite content
                 const summaryP = clonedNode.querySelector('.cv-section-p');
                 if (summaryP) {
-                    summaryP.innerHTML = opt.summary;
+                    summaryP.textContent = aiOutput.summary;
                 }
                 
                 const skillsContainer = clonedNode.querySelector('#cv-skills-badges');
                 if (skillsContainer) {
                     skillsContainer.innerHTML = '';
-                    opt.skills.forEach(skill => {
+                    aiOutput.skills.forEach(skill => {
                         const span = document.createElement('span');
                         span.className = 'skill-tag';
                         span.textContent = skill;
                         skillsContainer.appendChild(span);
                     });
                 }
+
+                const experienceLists = clonedNode.querySelectorAll('.cv-item-bullets');
+                experienceLists.forEach((list, index) => {
+                    const experienceLines = aiOutput.experienceBlocks[index] || [];
+                    list.innerHTML = '';
+                    experienceLines.forEach(line => {
+                        const li = document.createElement('li');
+                        li.textContent = line;
+                        list.appendChild(li);
+                    });
+                });
 
                 // Append finalized CV into modal preview canvas
                 reshaperCvCanvas.appendChild(clonedNode);
